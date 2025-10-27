@@ -122,27 +122,39 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            box-shadow: var(--shadow-medium);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #666;
+            border: 1px solid #ddd;
+            font-weight: 500;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-heavy);
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-1px);
+            border-color: #bbb;
+            color: #333;
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            color: #666;
+            border: 1px solid #ddd;
+            font-weight: 500;
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 1);
             transform: translateY(-1px);
+            border-color: #bbb;
+            color: #333;
         }
 
         /* 触摸设备优化 */
@@ -253,6 +265,8 @@
             align-items: center;
             flex-shrink: 0;
         }
+
+
 
         /* 移动端导航样式 */
         @media (max-width: 768px) {
@@ -2089,6 +2103,163 @@
             margin-top: 5px;
         }
 
+        /* 页面区域样式 */
+        .page-section {
+            padding: 60px 0;
+            min-height: 60vh;
+            background: var(--background-secondary);
+        }
+
+        .page-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+        }
+
+        /* 发现页面样式 */
+        .discover-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .discover-card {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .discover-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .discover-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        /* 热门页面样式 */
+        .hot-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: var(--background-secondary);
+            border-radius: var(--border-radius-medium);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-light);
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* 分类页面样式 */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .category-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .category-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        /* 排行榜页面样式 */
+        .ranking-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .ranking-list {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* 登录/注册表单样式 */
+        .login-form,
+        .register-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-light);
+        }
+
+        .login-form input,
+        .register-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-medium);
+            font-size: 16px;
+        }
+
+        .login-form button,
+        .register-form button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-medium);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .login-form button:hover,
+        .register-form button:hover {
+            background: var(--secondary-color);
+        }
+
         /* 页脚样式 */
         .footer {
             background-color: #333;
@@ -2270,8 +2441,10 @@
             </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">首页</a></li>
-                <li><a href="#tiebas">贴吧</a></li>
                 <li><a href="#discover">发现</a></li>
+                <li><a href="#hot">热门</a></li>
+                <li><a href="#categories">分类</a></li>
+                <li><a href="#rankings">排行榜</a></li>
             </ul>
             <div class="nav-user">
                 <button class="btn btn-secondary">登录</button>
@@ -3435,6 +3608,143 @@ document.querySelector('.image-upload-area').addEventListener('click', function(
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
+        const pageId = this.getAttribute('href').substring(1);
+        navigateToPage(pageId);
+    });
+});
+
+// 为登录/注册按钮添加点击事件
+document.querySelectorAll('.nav-user button').forEach(button => {
+    button.addEventListener('click', function() {
+        const pageId = this.textContent === '登录' ? 'login' : 'register';
+        navigateToPage(pageId);
+    });
+});
+
+// 页面导航功能
+function navigateToPage(pageId) {
+    console.log('导航到页面:', pageId);
+    
+    // 隐藏所有页面区域
+    document.querySelectorAll('.page-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // 隐藏其他页面
+    document.querySelector('.homepage').style.display = 'none';
+    document.querySelector('.tieba-detail').style.display = 'none';
+    document.querySelector('.create-post-page').style.display = 'none';
+    document.querySelector('.user-profile').style.display = 'none';
+    
+    // 显示指定页面
+    if (pageId === 'home') {
+        document.querySelector('.homepage').style.display = 'block';
+    } else {
+        const targetSection = document.getElementById(pageId);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+        }
+    }
+    
+    // 更新导航栏激活状态
+    updateNavActiveState(pageId);
+    
+    // 处理特定页面的操作
+    handlePageSpecificActions(pageId);
+}
+
+// 更新导航栏激活状态
+function updateNavActiveState(pageId) {
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + pageId) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// 处理特定页面的操作
+function handlePageSpecificActions(pageId) {
+    switch(pageId) {
+        case 'hot':
+            setupHotTabs();
+            break;
+        case 'rankings':
+            setupRankingTabs();
+            break;
+        case 'login':
+            setupLoginForm();
+            break;
+        case 'register':
+            setupRegisterForm();
+            break;
+    }
+}
+
+// 设置热门页面标签
+function setupHotTabs() {
+    const tabBtns = document.querySelectorAll('#hot .tab-btn');
+    const tabPanes = document.querySelectorAll('#hot .tab-pane');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // 移除所有激活状态
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            
+            // 添加激活状态
+            this.classList.add('active');
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+}
+
+// 设置排行榜页面标签
+function setupRankingTabs() {
+    const tabBtns = document.querySelectorAll('#rankings .tab-btn');
+    const tabPanes = document.querySelectorAll('#rankings .tab-pane');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // 移除所有激活状态
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            
+            // 添加激活状态
+            this.classList.add('active');
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+}
+
+// 设置登录表单
+function setupLoginForm() {
+    const loginForm = document.querySelector('#login .login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('登录功能演示 - 表单已提交');
+        });
+    }
+}
+
+// 设置注册表单
+function setupRegisterForm() {
+    const registerForm = document.querySelector('#register .register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('注册功能演示 - 表单已提交');
+        });
+    }
+}
+
+// 为导航链接添加点击事件
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
         if(this.textContent === '首页') {
             showPage('home');
         } else if(this.textContent === '贴吧') {
@@ -3693,6 +4003,132 @@ showPage = function(pageId) {
     }
 };
 </script>
+
+<!-- 发现页面 -->
+<div id="discover" class="page-section" style="display: none;">
+    <div class="container">
+        <h2>发现</h2>
+        <div class="discover-grid">
+            <div class="discover-card">
+                <h3>热门推荐</h3>
+                <p>发现最受欢迎的贴吧和内容</p>
+            </div>
+            <div class="discover-card">
+                <h3>兴趣推荐</h3>
+                <p>根据你的兴趣推荐相关内容</p>
+            </div>
+            <div class="discover-card">
+                <h3>新鲜事</h3>
+                <p>查看最新的贴吧动态</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 热门页面 -->
+<div id="hot" class="page-section" style="display: none;">
+    <div class="container">
+        <h2>热门</h2>
+        <div class="hot-tabs">
+            <button class="tab-btn active" data-tab="hot-tiebas">热门贴吧</button>
+            <button class="tab-btn" data-tab="hot-posts">热门帖子</button>
+            <button class="tab-btn" data-tab="hot-topics">热门话题</button>
+        </div>
+        <div class="tab-content">
+            <div id="hot-tiebas" class="tab-pane active">
+                <p>热门贴吧内容区域</p>
+            </div>
+            <div id="hot-posts" class="tab-pane">
+                <p>热门帖子内容区域</p>
+            </div>
+            <div id="hot-topics" class="tab-pane">
+                <p>热门话题内容区域</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分类页面 -->
+<div id="categories" class="page-section" style="display: none;">
+    <div class="container">
+        <h2>分类</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <h3>游戏</h3>
+                <p>游戏相关的贴吧</p>
+            </div>
+            <div class="category-card">
+                <h3>娱乐</h3>
+                <p>电影、音乐、综艺等</p>
+            </div>
+            <div class="category-card">
+                <h3>生活</h3>
+                <p>美食、旅游、健康等</p>
+            </div>
+            <div class="category-card">
+                <h3>科技</h3>
+                <p>数码、编程、科学等</p>
+            </div>
+            <div class="category-card">
+                <h3>体育</h3>
+                <p>各种体育赛事</p>
+            </div>
+            <div class="category-card">
+                <h3>学习</h3>
+                <p>教育、考试、技能等</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 排行榜页面 -->
+<div id="rankings" class="page-section" style="display: none;">
+    <div class="container">
+        <h2>排行榜</h2>
+        <div class="ranking-tabs">
+            <button class="tab-btn active" data-tab="daily-rank">日榜</button>
+            <button class="tab-btn" data-tab="weekly-rank">周榜</button>
+            <button class="tab-btn" data-tab="monthly-rank">月榜</button>
+        </div>
+        <div class="tab-content">
+            <div id="daily-rank" class="tab-pane active">
+                <p>日榜内容区域</p>
+            </div>
+            <div id="weekly-rank" class="tab-pane">
+                <p>周榜内容区域</p>
+            </div>
+            <div id="monthly-rank" class="tab-pane">
+                <p>月榜内容区域</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 登录页面 -->
+<div id="login" class="page-section" style="display: none;">
+    <div class="container">
+        <h2>登录</h2>
+        <form class="login-form">
+            <input type="text" placeholder="用户名/手机号/邮箱" required>
+            <input type="password" placeholder="密码" required>
+            <button type="submit">登录</button>
+        </form>
+    </div>
+</div>
+
+<!-- 注册页面 -->
+<div id="register" class="page-section" style="display: none;">
+    <div class="container">
+        <h2>注册</h2>
+        <form class="register-form">
+            <input type="text" placeholder="用户名" required>
+            <input type="email" placeholder="邮箱" required>
+            <input type="password" placeholder="密码" required>
+            <input type="password" placeholder="确认密码" required>
+            <button type="submit">注册</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

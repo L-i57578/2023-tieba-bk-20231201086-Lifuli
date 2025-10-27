@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百度贴吧 - 全球最大的中文社区</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-users"></i>
+                百度贴吧
+            </a>
+            
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#discover">发现</a></li>
+                <li><a href="#hot">热门</a></li>
+                <li><a href="#categories">分类</a></li>
+                <li><a href="#rankings">排行榜</a></li>
+            </ul>
+            
+            <div class="nav-user">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="搜索贴吧、帖子、用户...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <a href="#login" class="btn btn-login">登录</a>
+                <a href="#register" class="btn btn-register">注册</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页内容 -->
+    <main class="homepage">
+        <!-- 轮播图/推荐区域 -->
+        <section class="hero-section" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>欢迎来到百度贴吧</h1>
+                    <p>全球最大的中文社区，找到你感兴趣的圈子</p>
+                    <div class="search-box">
+                        <input type="text" class="search-input-large" placeholder="输入贴吧名称或关键词...">
+                        <button class="search-btn-large">
+                            <i class="fas fa-search"></i>
+                            搜索
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 发现页面 -->
+        <section class="page-section" id="discover" style="display: none;">
+            <div class="container">
+                <h2 class="section-title">发现精彩内容</h2>
+                <div class="discover-grid">
+                    <div class="discover-card">
+                        <i class="fas fa-compass"></i>
+                        <h3>推荐贴吧</h3>
+                        <p>根据你的兴趣推荐优质贴吧</p>
+                    </div>
+                    <div class="discover-card">
+                        <i class="fas fa-star"></i>
+                        <h3>精选帖子</h3>
+                        <p>发现社区中的精华内容</p>
+                    </div>
+                    <div class="discover-card">
+                        <i class="fas fa-users"></i>
+                        <h3>热门话题</h3>
+                        <p>参与当前最热门的话题讨论</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 热门页面 -->
+        <section class="page-section" id="hot" style="display: none;">
+            <div class="container">
+                <h2 class="section-title">热门内容</h2>
+                <div class="hot-content">
+                    <div class="hot-tabs">
+                        <button class="tab-btn active" data-tab="hot-tiebas">热门贴吧</button>
+                        <button class="tab-btn" data-tab="hot-posts">热门帖子</button>
+                        <button class="tab-btn" data-tab="hot-users">热门用户</button>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="hot-tiebas">
+                            <p>展示当前最热门的贴吧列表</p>
+                        </div>
+                        <div class="tab-pane" id="hot-posts">
+                            <p>展示当前最热门的帖子</p>
+                        </div>
+                        <div class="tab-pane" id="hot-users">
+                            <p>展示活跃的热门用户</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 分类页面 -->
+        <section class="page-section" id="categories" style="display: none;">
+            <div class="container">
+                <h2 class="section-title">贴吧分类</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <i class="fas fa-gamepad"></i>
+                        <h3>游戏</h3>
+                        <p>游戏讨论、攻略分享</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-film"></i>
+                        <h3>影视</h3>
+                        <p>电影、电视剧讨论</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-music"></i>
+                        <h3>音乐</h3>
+                        <p>音乐分享、歌手讨论</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-book"></i>
+                        <h3>文学</h3>
+                        <p>小说、文学创作</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-basketball-ball"></i>
+                        <h3>体育</h3>
+                        <p>体育赛事、健身讨论</p>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-laptop"></i>
+                        <h3>科技</h3>
+                        <p>科技资讯、数码产品</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 排行榜页面 -->
+        <section class="page-section" id="rankings" style="display: none;">
+            <div class="container">
+                <h2 class="section-title">排行榜</h2>
+                <div class="ranking-tabs">
+                    <button class="tab-btn active" data-tab="tieba-ranking">贴吧排行</button>
+                    <button class="tab-btn" data-tab="post-ranking">帖子排行</button>
+                    <button class="tab-btn" data-tab="user-ranking">用户排行</button>
+                </div>
+                <div class="ranking-content">
+                    <div class="ranking-list active" id="tieba-ranking">
+                        <p>展示贴吧人气排行榜</p>
+                    </div>
+                    <div class="ranking-list" id="post-ranking">
+                        <p>展示帖子热度排行榜</p>
+                    </div>
+                    <div class="ranking-list" id="user-ranking">
+                        <p>展示用户活跃度排行榜</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 登录页面 -->
+        <section class="page-section" id="login" style="display: none;">
+            <div class="container">
+                <div class="login-form">
+                    <h2>用户登录</h2>
+                    <form>
+                        <input type="text" placeholder="用户名/手机号/邮箱">
+                        <input type="password" placeholder="密码">
+                        <button type="submit">登录</button>
+                    </form>
+                    <p>还没有账号？<a href="#register">立即注册</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 注册页面 -->
+        <section class="page-section" id="register" style="display: none;">
+            <div class="container">
+                <div class="register-form">
+                    <h2>用户注册</h2>
+                    <form>
+                        <input type="text" placeholder="用户名">
+                        <input type="email" placeholder="邮箱">
+                        <input type="password" placeholder="密码">
+                        <input type="password" placeholder="确认密码">
+                        <button type="submit">注册</button>
+                    </form>
+                    <p>已有账号？<a href="#login">立即登录</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 首页内容区域 -->
+        <div class="container" id="home-content">
+            <div class="main-content">
+                <!-- 热门贴吧列表 -->
+                <section class="hot-tiebas">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-fire"></i>
+                            热门贴吧
+                        </h2>
+                        <a href="#" class="view-all">查看全部</a>
+                    </div>
+                    <div class="tieba-grid" id="tiebaGrid">
+                        <!-- 贴吧列表将通过JavaScript动态生成 -->
+                    </div>
+                </section>
+
+                <!-- 热门帖子列表 -->
+                <section class="hot-posts">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-newspaper"></i>
+                            热门帖子
+                        </h2>
+                        <a href="#" class="view-all">查看全部</a>
+                    </div>
+                    <div class="post-list" id="postList">
+                        <!-- 帖子列表将通过JavaScript动态生成 -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于贴吧</h3>
+                    <ul>
+                        <li><a href="#">贴吧介绍</a></li>
+                        <li><a href="#">帮助中心</a></li>
+                        <li><a href="#">贴吧协议</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <ul>
+                        <li><a href="#">意见反馈</a></li>
+                        <li><a href="#">商务合作</a></li>
+                        <li><a href="#">举报投诉</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 百度贴吧. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
