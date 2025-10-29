@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄影吧 - 百度贴吧</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0066cc',
+                        secondary: '#ff6600',
+                        neutral: '#f2f2f2',
+                        dark: '#333333',
+                    },
+                    fontFamily: {
+                        sans: ['PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            }
+            .card-hover {
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .card-hover:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- 顶部导航栏 -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="首页.html" class="flex items-center space-x-2">
+                        <i class="fa fa-comments text-primary text-2xl"></i>
+                        <span class="text-xl font-bold text-primary">百度贴吧</span>
+                    </a>
+                </div>
+                
+                <!-- 搜索框 -->
+                <div class="hidden md:flex relative flex-1 max-w-xl mx-8">
+                    <input type="text" placeholder="搜索本吧内容..." 
+                           class="w-full py-2 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition">
+                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+                
+                <!-- 导航链接 -->
+                <nav class="flex items-center space-x-1 md:space-x-4">
+                    <a href="首页.html" class="px-3 py-2 text-dark hover:bg-gray-100 rounded-md transition">首页</a>
+                    <a href="吧广场.html" class="px-3 py-2 text-dark hover:bg-gray-100 rounded-md transition">吧广场</a>
+                    <a href="消息.html" class="px-3 py-2 text-dark hover:bg-gray-100 rounded-md transition relative">
+                        <i class="fa fa-bell"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
+                    </a>
+                    <a href="个人信息.html" class="px-3 py-2 text-dark hover:bg-gray-100 rounded-md transition">
+                        <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-8 h-8 rounded-full object-cover border-2 border-white shadow">
+                    </a>
+                    <!-- 移动端菜单按钮 -->
+                    <button class="md:hidden p-2 text-dark hover:bg-gray-100 rounded-md transition">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 贴吧头部信息 -->
+    <div class="bg-primary/90 text-white">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                <!-- 贴吧图标 -->
+                <img src="https://picsum.photos/id/237/200" alt="摄影吧" class="w-20 h-20 md:w-24 md:h-24 rounded-lg object-cover border-4 border-white/30 shadow-lg">
+                
+                <!-- 贴吧信息 -->
+                <div class="flex-1 text-center md:text-left">
+                    <h1 class="text-2xl md:text-3xl font-bold text-shadow mb-2">摄影吧</h1>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 text-sm">
+                        <span class="flex items-center"><i class="fa fa-user-o mr-1"></i>156万关注</span>
+                        <span class="flex items-center"><i class="fa fa-comments-o mr-1"></i>3.2万今日发帖</span>
+                        <span class="flex items-center"><i class="fa fa-history mr-1"></i>创建于 2008-05-12</span>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="flex space-x-3">
+                    <button id="followBtn" class="px-5 py-2 bg-white text-primary font-medium rounded-full hover:bg-gray-100 transition shadow-md">
+                        <i class="fa fa-plus-circle mr-1"></i> 关注
+                    </button>
+                    <a href="发布中心.html" class="px-5 py-2 bg-secondary text-white font-medium rounded-full hover:bg-secondary/90 transition shadow-md">
+                        <i class="fa fa-pencil mr-1"></i> 发帖
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 贴吧导航 -->
+    <div class="bg-white shadow-sm sticky top-16 z-40">
+        <div class="container mx-auto px-4">
+            <div class="overflow-x-auto">
+                <div class="flex whitespace-nowrap py-2">
+                    <a href="#" class="px-4 py-2 text-primary font-medium border-b-2 border-primary mr-2">
+                        关注
+                    </a>
+                    <a href="#" class="px-4 py-2 text-dark hover:bg-gray-50 rounded-md mr-2 transition">
+                        热门
+                    </a>
+                    <a href="#" class="px-4 py-2 text-dark hover:bg-gray-50 rounded-md mr-2 transition">
+                        最新
+                    </a>
+                    <a href="#" class="px-4 py-2 text-dark hover:bg-gray-50 rounded-md mr-2 transition">
+                        精华
+                    </a>
+                    <a href="#" class="px-4 py-2 text-dark hover:bg-gray-50 rounded-md mr-2 transition">
+                        图片
+                    </a>
+                    <a href="#" class="px-4 py-2 text-dark hover:bg-gray-50 rounded-md mr-2 transition">
+                        视频
+                    </a>
+                    <a href="#" class="px-4 py-2 text-dark hover:bg-gray-50 rounded-md mr-2 transition">
+                        话题
+                    </a>
+                    <a href="#" class="px-4 py-2 text-dark hover:bg-gray-50 rounded-md mr-2 transition">
+                        吧主推荐
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 py-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- 左侧边栏 -->
+            <aside class="lg:w-64 flex-shrink-0 hidden lg:block">
+                <!-- 吧主信息 -->
+                <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+                    <h3 class="font-bold text-dark mb-3">吧务团队</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <img src="https://picsum.photos/id/823/100" alt="吧主头像" class="w-10 h-10 rounded-full object-cover">
+                            <div class="ml-3">
+                                <div class="flex items-center">
+                                    <h4 class="font-medium text-dark">摄影大师</h4>
+                                    <span class="ml-2 px-1.5 py-0.5 bg-red-500 text-white text-xs rounded">吧主</span>
+                                </div>
+                                <p class="text-xs text-gray-500">发帖 12.5万</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://picsum.photos/id/824/100" alt="小吧主头像" class="w-10 h-10 rounded-full object-cover">
+                            <div class="ml-3">
+                                <div class="flex items-center">
+                                    <h4 class="font-medium text-dark">光影记录者</h4>
+                                    <span class="ml-2 px-1.5 py-0.5 bg-orange-500 text-white text-xs rounded">小吧主</span>
+                                </div>
+                                <p class="text-xs text-gray-500">发帖 8.3万</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <img src="https://picsum.photos/id/825/100" alt="小吧主头像" class="w-10 h-10 rounded-full object-cover">
+                            <div class="ml-3">
+                                <div class="flex items-center">
+                                    <h4 class="font-medium text-dark">风景摄影师</h4>
+                                    <span class="ml-2 px-1.5 py-0.5 bg-orange-500 text-white text-xs rounded">小吧主</span>
+                                </div>
+                                <p class="text-xs text-gray-500">发帖 6.7万</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 本吧活跃度 -->
+                <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+                    <h3 class="font-bold text-dark mb-3">本吧活跃度</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-600">签到率</span>
+                                <span class="font-medium text-primary">32.5%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 32.5%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-600">今日帖子</span>
+                                <span class="font-medium text-primary">3.2万</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-secondary h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-600">在线人数</span>
+                                <span class="font-medium text-primary">28,645</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 吧内公告 -->
+                <div class="bg-white rounded-xl shadow-sm p-4">
+                    <h3 class="font-bold text-dark mb-3">吧内公告</h3>
+                    <div class="space-y-3">
+                        <a href="#" class="block p-2 bg-gray-50 rounded-md hover:bg-gray-100 transition">
+                            <h4 class="font-medium text-dark text-sm">摄影吧发帖规范更新通知</h4>
+                            <p class="text-xs text-gray-500 mt-1">2023-04-15</p>
+                        </a>
+                        <a href="#" class="block p-2 bg-gray-50 rounded-md hover:bg-gray-100 transition">
+                            <h4 class="font-medium text-dark text-sm">关于举办"春季摄影大赛"的通知</h4>
+                            <p class="text-xs text-gray-500 mt-1">2023-04-10</p>
+                        </a>
+                        <a href="#" class="block p-2 bg-gray-50 rounded-md hover:bg-gray-100 transition">
+                            <h4 class="font-medium text-dark text-sm">吧规修订公告</h4>
+                            <p class="text-xs text-gray-500 mt-1">2023-03-28</p>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- 中间内容 -->
+            <div class="flex-1">
+                <!-- 置顶帖子 -->
+                <div class="bg-orange-50 rounded-xl shadow-sm p-4 mb-6 border-l-4 border-orange-500">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fa fa-thumb-tack text-orange-500 text-xl"></i>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded-full">置顶</span>
+                                <span class="text-xs text-gray-500">2023-04-15</span>
+                            </div>
+                            <h3 class="font-bold text-dark mt-1">【公告】摄影吧发帖规范及违规处理办法</h3>
+                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">为了维护摄影吧的良好氛围，特制定如下发帖规范：1. 禁止发布广告、垃圾信息；2. 禁止发布低俗、暴力内容；3. 鼓励原创内容分享；4. 请文明交流，尊重他人...</p>
+                            <a href="帖子详情页.html" class="text-primary text-sm hover:underline mt-1 inline-block">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 精品帖子 -->
+                <div class="bg-blue-50 rounded-xl shadow-sm p-4 mb-6 border-l-4 border-blue-500">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fa fa-diamond text-blue-500 text-xl"></i>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">精品</span>
+                                <span class="text-xs text-gray-500">2023-04-10</span>
+                            </div>
+                            <h3 class="font-bold text-dark mt-1">【教程】新手必看！摄影入门全攻略</h3>
+                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">本教程适合摄影新手，从相机基本操作开始，讲解曝光三要素、构图技巧、光线运用等基础知识，附带大量实例照片和参数设置...</p>
+                            <a href="帖子详情页.html" class="text-primary text-sm hover:underline mt-1 inline-block">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子列表 -->
+                <div class="bg-white rounded-xl shadow-sm p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-dark">热门帖子</h3>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 bg-gray-100 text-dark rounded-full text-sm hover:bg-gray-200 transition">
+                                最新回复
+                            </button>
+                            <button class="px-3 py-1 bg-gray-100 text-dark rounded-full text-sm hover:bg-gray-200 transition">
+                                最多回复
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 帖子列表 -->
+                    <div class="space-y-4">
+                        <a href="帖子详情页.html" class="block p-3 hover:bg-gray-50 rounded-md transition card-hover">
+                            <div class="flex items-start">
+                                <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                                <div class="ml-3 flex-1">
+                                    <div class="flex items-center">
+                                        <h3 class="font-medium text-dark">摄影爱好者</h3>
+                                        <span class="ml-2 px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">Lv.6</span>
+                                    </div>
+                                    <h4 class="font-bold text-dark mt-1 line-clamp-2">分享一下最近拍的照片，大家觉得怎么样？欢迎评论区交流摄影技巧！</h4>
+                                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">这组照片是在上周末去郊外拍摄的，天气非常好，光线也很棒。第一次尝试这种风格，希望大家喜欢...</p>
+                                    <div class="mt-3 grid grid-cols-3 gap-2">
+                                        <img src="https://picsum.photos/id/237/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
+                                        <img src="https://picsum.photos/id/24/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
+                                        <img src="https://picsum.photos/id/26/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
+                                    </div>
+                                    <div class="mt-3 flex items-center text-sm text-gray-500 justify-between">
+                                        <div class="flex space-x-4">
+                                            <span class="flex items-center"><i class="fa fa-thumbs-up mr-1"></i> 128</span>
+                                            <span class="flex items-center"><i class="fa fa-comment mr-1"></i> 36</span>
+                                            <span class="flex items-center"><i class="fa fa-eye mr-1"></i> 2.4k</span>
+                                        </div>
+                                        <span>2小时前</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="帖子详情页.html" class="block p-3 hover:bg-gray-50 rounded-md transition card-hover">
+                            <div class="flex items-start">
+                                <img src="https://picsum.photos/id/65/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                                <div class="ml-3 flex-1">
+                                    <div class="flex items-center">
+                                        <h3 class="font-medium text-dark">风景摄影师</h3>
+                                        <span class="ml-2 px-1.5 py-0.5 bg-orange-500 text-white text-xs rounded">小吧主</span>
+                                    </div>
+                                    <h4 class="font-bold text-dark mt-1 line-clamp-2">【器材讨论】新手如何选择第一台相机？附选购指南</h4>
+                                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">很多新手朋友在选择第一台相机时都会感到困惑，今天给大家详细分析一下不同类型相机的优缺点，以及如何根据自己的需求和预算进行选择...</p>
+                                    <div class="mt-3">
+                                        <img src="https://picsum.photos/id/160/800/400" alt="帖子图片" class="w-full aspect-video object-cover rounded-md">
+                                    </div>
+                                    <div class="mt-3 flex items-center text-sm text-gray-500 justify-between">
+                                        <div class="flex space-x-4">
+                                            <span class="flex items-center"><i class="fa fa-thumbs-up mr-1"></i> 567</span>
+                                            <span class="flex items-center"><i class="fa fa-comment mr-1"></i> 124</span>
+                                            <span class="flex items-center"><i class="fa fa-eye mr-1"></i> 8.7k</span>
+                                        </div>
+                                        <span>昨天 14:30</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="帖子详情页.html" class="block p-3 hover:bg-gray-50 rounded-md transition card-hover">
+                            <div class="flex items-start">
+                                <img src="https://picsum.photos/id/66/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                                <div class="ml-3 flex-1">
+                                    <div class="flex items-center">
+                                        <h3 class="font-medium text-dark">夜景拍摄者</h3>
+                                        <span class="ml-2 px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">Lv.5</span>
+                                    </div>
+                                    <h4 class="font-bold text-dark mt-1 line-clamp-2">【技巧分享】如何拍出漂亮的夜景照片？</h4>
+                                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">夜景拍摄一直是摄影中的难点，需要注意很多细节。本文将分享夜景拍摄的关键技巧，包括相机设置、三脚架使用、构图技巧等，帮助大家拍出满意的夜景作品...</p>
+                                    <div class="mt-3 grid grid-cols-2 gap-2">
+                                        <img src="https://picsum.photos/id/180/400" alt="帖子图片" class="w-full aspect-video object-cover rounded-md">
+                                        <img src="https://picsum.photos/id/184/400" alt="帖子图片" class="w-full aspect-video object-cover rounded-md">
+                                    </div>
+                                    <div class="mt-3 flex items-center text-sm text-gray-500 justify-between">
+                                        <div class="flex space-x-4">
+                                            <span class="flex items-center"><i class="fa fa-thumbs-up mr-1"></i> 342</span>
+                                            <span class="flex items-center"><i class="fa fa-comment mr-1"></i> 89</span>
+                                            <span class="flex items-center"><i class="fa fa-eye mr-1"></i> 5.3k</span>
+                                        </div>
+                                        <span>3天前</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- 加载更多 -->
+                    <div class="text-center mt-6">
+                        <button class="px-6 py-2 border border-gray-300 text-dark rounded-full hover:bg-gray-50 transition">
+                            加载更多
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧边栏 -->
+            <aside class="lg:w-80 flex-shrink-0 hidden lg:block">
+                <!-- 热门话题 -->
+                <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+                    <h3 class="font-bold text-dark mb-3">本吧热门话题</h3>
+                    <div class="space-y-3">
+                        <a href="帖子详情页.html" class="block p-2 hover:bg-gray-50 rounded-md transition">
+                            <div class="flex items-center">
+                                <span class="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">1</span>
+                                <span class="text-sm text-dark line-clamp-1">#春季摄影大赛#</span>
+                                <span class="ml-auto text-xs text-gray-500">1.2万讨论</span>
+                            </div>
+                        </a>
+                        <a href="帖子详情页.html" class="block p-2 hover:bg-gray-50 rounded-md transition">
+                            <div class="flex items-center">
+                                <span class="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">2</span>
+                                <span class="text-sm text-dark line-clamp-1">#新手器材推荐#</span>
+                                <span class="ml-auto text-xs text-gray-500">8745讨论</span>
+                            </div>
+                        </a>
+                        <a href="帖子详情页.html" class="block p-2 hover:bg-gray-50 rounded-md transition">
+                            <div class="flex items-center">
+                                <span class="w-6 h-6 bg-yellow-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">3</span>
+                                <span class="text-sm text-dark line-clamp-1">#构图技巧分享#</span>
+                                <span class="ml-auto text-xs text-gray-500">6532讨论</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 活跃用户 -->
+                <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+                    <h3 class="font-bold text-dark mb-3">活跃用户</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+                                <div class="ml-3">
+                                    <h4 class="font-medium text-dark">摄影爱好者</h4>
+                                    <p class="text-xs text-gray-500">发帖 256</p>
+                                </div>
+                            </div>
+                            <button class="px-3 py-1 bg-primary text-white text-sm rounded-full hover:bg-primary/90 transition">
+                                关注
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://picsum.photos/id/65/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+                                <div class="ml-3">
+                                    <h4 class="font-medium text-dark">风景摄影师</h4>
+                                    <p class="text-xs text-gray-500">发帖 189</p>
+                                </div>
+                            </div>
+                            <button class="px-3 py-1 bg-primary text-white text-sm rounded-full hover:bg-primary/90 transition">
+                                关注
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://picsum.photos/id/66/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+                                <div class="ml-3">
+                                    <h4 class="font-medium text-dark">夜景拍摄者</h4>
+                                    <p class="text-xs text-gray-500">发帖 145</p>
+                                </div>
+                            </div>
+                            <button class="px-3 py-1 bg-primary text-white text-sm rounded-full hover:bg-primary/90 transition">
+                                关注
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 相关贴吧 -->
+                <div class="bg-white rounded-xl shadow-sm p-4">
+                    <h3 class="font-bold text-dark mb-3">相关贴吧</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="贴吧详情.html" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-md transition">
+                            <img src="https://picsum.photos/id/160/100" alt="人像摄影吧" class="w-12 h-12 rounded-full object-cover mb-2">
+                            <span class="text-sm font-medium text-dark text-center">人像摄影吧</span>
+                            <span class="text-xs text-gray-500">98万关注</span>
+                        </a>
+                        <a href="贴吧详情.html" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-md transition">
+                            <img src="https://picsum.photos/id/180/100" alt="夜景摄影吧" class="w-12 h-12 rounded-full object-cover mb-2">
+                            <span class="text-sm font-medium text-dark text-center">夜景摄影吧</span>
+                            <span class="text-xs text-gray-500">65万关注</span>
+                        </a>
+                        <a href="贴吧详情.html" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-md transition">
+                            <img src="https://picsum.photos/id/184/100" alt="手机摄影吧" class="w-12 h-12 rounded-full object-cover mb-2">
+                            <span class="text-sm font-medium text-dark text-center">手机摄影吧</span>
+                            <span class="text-xs text-gray-500">123万关注</span>
+                        </a>
+                        <a href="贴吧详情.html" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-md transition">
+                            <img src="https://picsum.photos/id/237/100" alt="器材交流吧" class="w-12 h-12 rounded-full object-cover mb-2">
+                            <span class="text-sm font-medium text-dark text-center">器材交流吧</span>
+                            <span class="text-xs text-gray-500">78万关注</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+    
+    <!-- 底部导航栏（移动端） -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg z-40">
+        <div class="grid grid-cols-5 gap-1">
+            <a href="首页.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <i class="fa fa-home text-xl"></i>
+                <span class="text-xs mt-1">首页</span>
+            </a>
+            <a href="吧广场.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <i class="fa fa-compass text-xl"></i>
+                <span class="text-xs mt-1">广场</span>
+            </a>
+            <a href="发布中心.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center -mt-4">
+                    <i class="fa fa-pencil"></i>
+                </div>
+                <span class="text-xs mt-1">发布</span>
+            </a>
+            <a href="消息.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <i class="fa fa-bell text-xl"></i>
+                <span class="text-xs mt-1">消息</span>
+            </a>
+            <a href="个人信息.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <i class="fa fa-user text-xl"></i>
+                <span class="text-xs mt-1">我的</span>
+            </a>
+        </div>
+    </nav>
+    
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href'))?.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 响应式菜单切换
+        const menuButton = document.querySelector('.fa-bars')?.parentElement;
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                alert('菜单按钮被点击');
+            });
+        }
+        
+        // 关注按钮点击事件
+        const followBtn = document.getElementById('followBtn');
+        if (followBtn) {
+            followBtn.addEventListener('click', function() {
+                if (this.textContent.includes('关注')) {
+                    this.innerHTML = '<i class="fa fa-check-circle mr-1"></i> 已关注';
+                    this.classList.remove('bg-white', 'text-primary');
+                    this.classList.add('bg-gray-200', 'text-gray-700');
+                    alert('关注成功');
+                } else {
+                    this.innerHTML = '<i class="fa fa-plus-circle mr-1"></i> 关注';
+                    this.classList.add('bg-white', 'text-primary');
+                    this.classList.remove('bg-gray-200', 'text-gray-700');
+                    alert('已取消关注');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

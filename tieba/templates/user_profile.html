@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}个人资料 - 百度贴吧{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- 用户信息卡片 -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+        <div class="flex flex-col md:flex-row items-center md:items-start">
+            <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-24 h-24 rounded-full object-cover border-4 border-primary/10">
+            <div class="md:ml-6 mt-4 md:mt-0 flex-1">
+                <div class="flex flex-col md:flex-row md:items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-dark">{{ user.username }}</h1>
+                        <p class="text-gray-500">Lv.5 贴吧用户</p>
+                    </div>
+                    <button class="mt-4 md:mt-0 px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition">
+                        编辑资料
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-dark">152</div>
+                        <div class="text-sm text-gray-500">发帖</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-dark">328</div>
+                        <div class="text-sm text-gray-500">回复</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-dark">128</div>
+                        <div class="text-sm text-gray-500">关注</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg font-bold text-dark">56</div>
+                        <div class="text-sm text-gray-500">粉丝</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 我的帖子 -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-xl font-bold text-dark mb-4">我的帖子</h2>
+        <div class="space-y-4">
+            <a href="{% url 'post_detail' pk=1 %}" class="block p-3 hover:bg-gray-50 rounded-md transition">
+                <h3 class="font-bold text-dark line-clamp-1">【教程】自制提拉米苏，零失败教程分享！</h3>
+                <p class="text-sm text-gray-600 line-clamp-2 mt-1">今天给大家分享一个简单易学的提拉米苏做法，不需要烤箱，材料也很容易买到...</p>
+                <div class="flex items-center text-xs text-gray-500 mt-2">
+                    <span>美食吧</span>
+                    <span class="mx-2">•</span>
+                    <span>2小时前</span>
+                    <span class="mx-2">•</span>
+                    <span>342赞</span>
+                </div>
+            </a>
+            
+            <a href="{% url 'post_detail' pk=2 %}" class="block p-3 hover:bg-gray-50 rounded-md transition">
+                <h3 class="font-bold text-dark line-clamp-1">家常菜系列：红烧肉的正确做法</h3>
+                <p class="text-sm text-gray-600 line-clamp-2 mt-1">红烧肉是很多人的最爱，但要做得好吃并不容易。今天分享我的独家秘方...</p>
+                <div class="flex items-center text-xs text-gray-500 mt-2">
+                    <span>美食吧</span>
+                    <span class="mx-2">•</span>
+                    <span>5小时前</span>
+                    <span class="mx-2">•</span>
+                    <span>128赞</span>
+                </div>
+            </a>
+            
+            <a href="{% url 'post_detail' pk=3 %}" class="block p-3 hover:bg-gray-50 rounded-md transition">
+                <h3 class="font-bold text-dark line-clamp-1">探店分享：这家川菜馆的麻婆豆腐绝了！</h3>
+                <p class="text-sm text-gray-600 line-clamp-2 mt-1">今天去了一家新开的川菜馆，麻婆豆腐做得非常地道，麻辣鲜香...</p>
+                <div class="flex items-center text-xs text-gray-500 mt-2">
+                    <span>美食吧</span>
+                    <span class="mx-2">•</span>
+                    <span>昨天</span>
+                    <span class="mx-2">•</span>
+                    <span>567赞</span>
+                </div>
+            </a>
+        </div>
+        
+        <div class="text-center mt-6">
+            <button class="px-6 py-2 border border-gray-300 text-dark rounded-full hover:bg-gray-50 transition">
+                加载更多
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

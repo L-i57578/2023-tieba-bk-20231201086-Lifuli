@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}发布中心 - 百度贴吧{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <h1 class="text-2xl font-bold text-dark mb-6">发布中心</h1>
+        
+        <!-- 快速发布 -->
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-dark mb-4">快速发布</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <a href="#" class="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-primary hover:text-primary transition">
+                    <i class="fas fa-edit text-2xl mb-2"></i>
+                    <div class="font-medium">发帖</div>
+                </a>
+                <a href="#" class="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-primary hover:text-primary transition">
+                    <i class="fas fa-image text-2xl mb-2"></i>
+                    <div class="font-medium">发图</div>
+                </a>
+                <a href="#" class="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-primary hover:text-primary transition">
+                    <i class="fas fa-video text-2xl mb-2"></i>
+                    <div class="font-medium">发视频</div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 发布历史 -->
+        <div>
+            <h2 class="text-lg font-semibold text-dark mb-4">发布历史</h2>
+            <div class="space-y-4">
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-dark">【教程】自制提拉米苏，零失败教程分享！</h3>
+                        <span class="text-sm text-gray-500">2小时前</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">今天给大家分享一个简单易学的提拉米苏做法，不需要烤箱，材料也很容易买到...</p>
+                    <div class="flex items-center text-xs text-gray-500">
+                        <span>美食吧</span>
+                        <span class="mx-2">•</span>
+                        <span>342赞</span>
+                        <span class="mx-2">•</span>
+                        <span>56回复</span>
+                    </div>
+                </div>
+                
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-dark">家常菜系列：红烧肉的正确做法</h3>
+                        <span class="text-sm text-gray-500">5小时前</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">红烧肉是很多人的最爱，但要做得好吃并不容易。今天分享我的独家秘方...</p>
+                    <div class="flex items-center text-xs text-gray-500">
+                        <span>美食吧</span>
+                        <span class="mx-2">•</span>
+                        <span>128赞</span>
+                        <span class="mx-2">•</span>
+                        <span>23回复</span>
+                    </div>
+                </div>
+                
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-dark">探店分享：这家川菜馆的麻婆豆腐绝了！</h3>
+                        <span class="text-sm text-gray-500">昨天</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">今天去了一家新开的川菜馆，麻婆豆腐做得非常地道，麻辣鲜香...</p>
+                    <div class="flex items-center text-xs text-gray-500">
+                        <span>美食吧</span>
+                        <span class="mx-2">•</span>
+                        <span>567赞</span>
+                        <span class="mx-2">•</span>
+                        <span>89回复</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-6">
+                <button class="px-6 py-2 border border-gray-300 text-dark rounded-full hover:bg-gray-50 transition">
+                    加载更多
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

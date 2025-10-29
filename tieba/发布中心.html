@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布中心 - 百度贴吧</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0066cc',
+                        secondary: '#ff6600',
+                        neutral: '#f2f2f2',
+                        dark: '#333333',
+                    },
+                    fontFamily: {
+                        sans: ['PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            }
+            .card-hover {
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .card-hover:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+            .form-focus {
+                @apply focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- 顶部导航栏 -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="首页.html" class="flex items-center space-x-2">
+                        <i class="fa fa-comments text-primary text-2xl"></i>
+                        <span class="text-xl font-bold text-primary">百度贴吧</span>
+                    </a>
+                </div>
+                
+                <!-- 导航链接 -->
+                <nav class="flex items-center space-x-1 md:space-x-4">
+                    <a href="首页.html" class="px-3 py-2 text-dark hover:bg-gray-100 rounded-md transition">首页</a>
+                    <a href="吧广场.html" class="px-3 py-2 text-dark hover:bg-gray-100 rounded-md transition">吧广场</a>
+                    <a href="消息.html" class="px-3 py-2 text-dark hover:bg-gray-100 rounded-md transition relative">
+                        <i class="fa fa-bell"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">2</span>
+                    </a>
+                    <a href="个人信息.html" class="px-3 py-2 text-dark hover:bg-gray-100 rounded-md transition">
+                        <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-8 h-8 rounded-full object-cover border-2 border-white shadow">
+                    </a>
+                    <!-- 移动端菜单按钮 -->
+                    <button class="md:hidden p-2 text-dark hover:bg-gray-100 rounded-md transition" id="menuBtn">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 py-6 pb-24 lg:pb-6">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <!-- 页面标题 -->
+            <h1 class="text-2xl font-bold text-dark mb-6">发布中心</h1>
+            
+            <!-- 发布类型选择 -->
+            <div class="flex border-b border-gray-200 mb-6">
+                <button class="px-6 py-3 font-medium text-primary border-b-2 border-primary" id="postTab">发布帖子</button>
+                <button class="px-6 py-3 font-medium text-gray-500 hover:text-dark transition" id="replyTab">发布回复</button>
+            </div>
+            
+            <!-- 发布帖子表单 -->
+            <div id="postForm">
+                <!-- 选择贴吧 -->
+                <div class="mb-6">
+                    <label class="block text-dark font-medium mb-2">选择发布到哪个贴吧</label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg form-focus appearance-none">
+                            <option value="">请选择贴吧</option>
+                            <option value="摄影吧">摄影吧</option>
+                            <option value="旅游吧">旅游吧</option>
+                            <option value="美食吧">美食吧</option>
+                            <option value="电影吧">电影吧</option>
+                            <option value="音乐吧">音乐吧</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
+                            <i class="fa fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子标题 -->
+                <div class="mb-6">
+                    <label class="block text-dark font-medium mb-2">帖子标题</label>
+                    <input type="text" placeholder="请输入帖子标题（最多50字）" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg form-focus">
+                    <p class="text-xs text-gray-500 mt-1">标题将显示在帖子列表中，吸引更多用户点击</p>
+                </div>
+                
+                <!-- 帖子内容 -->
+                <div class="mb-6">
+                    <label class="block text-dark font-medium mb-2">帖子内容</label>
+                    <div class="border border-gray-300 rounded-lg overflow-hidden">
+                        <!-- 编辑器工具栏 -->
+                        <div class="flex flex-wrap items-center gap-1 px-3 py-2 bg-gray-50 border-b border-gray-300">
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="字体加粗">
+                                <i class="fa fa-bold"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="字体斜体">
+                                <i class="fa fa-italic"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="字体下划线">
+                                <i class="fa fa-underline"></i>
+                            </button>
+                            <span class="h-4 border-r border-gray-300 mx-1"></span>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入图片">
+                                <i class="fa fa-image"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入链接">
+                                <i class="fa fa-link"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入视频">
+                                <i class="fa fa-video-camera"></i>
+                            </button>
+                            <span class="h-4 border-r border-gray-300 mx-1"></span>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="表情">
+                                <i class="fa fa-smile-o"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="@用户">
+                                <i class="fa fa-at"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入话题">
+                                <i class="fa fa-hashtag"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- 内容输入框 -->
+                        <textarea placeholder="请输入帖子内容，支持图片、视频等多媒体内容..." 
+                                  class="w-full px-4 py-3 min-h-[200px] resize-none form-focus"></textarea>
+                    </div>
+                </div>
+                
+                <!-- 图片上传 -->
+                <div class="mb-6">
+                    <label class="block text-dark font-medium mb-2">添加图片（可选）</label>
+                    <div class="flex flex-wrap gap-3">
+                        <!-- 上传按钮 -->
+                        <div class="w-24 h-24 border border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition relative group" id="uploadBtn">
+                            <input type="file" multiple accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <i class="fa fa-plus text-2xl text-gray-400 group-hover:text-primary transition"></i>
+                            <span class="text-xs text-gray-500 mt-1 group-hover:text-primary transition">添加图片</span>
+                        </div>
+                        
+                        <!-- 预览图占位 -->
+                        <div id="previewContainer" class="hidden">
+                            <!-- 上传的图片会显示在这里 -->
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">最多可上传9张图片，单张不超过10MB，支持jpg、png、gif格式</p>
+                </div>
+                
+                <!-- 话题标签 -->
+                <div class="mb-6">
+                    <label class="block text-dark font-medium mb-2">添加话题标签（可选）</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="px-3 py-1 border border-primary text-primary rounded-full text-sm hover:bg-primary/5 transition">#摄影技巧#</button>
+                        <button class="px-3 py-1 border border-primary text-primary rounded-full text-sm hover:bg-primary/5 transition">#风景摄影#</button>
+                        <button class="px-3 py-1 border border-primary text-primary rounded-full text-sm hover:bg-primary/5 transition">#新手入门#</button>
+                        <button class="px-3 py-1 border border-primary text-primary rounded-full text-sm hover:bg-primary/5 transition">#器材讨论#</button>
+                        <div class="relative">
+                            <input type="text" placeholder="添加自定义话题" 
+                                   class="px-3 py-1 border border-gray-300 rounded-full text-sm form-focus w-32 md:w-auto">
+                            <button class="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs px-2 py-0.5 bg-primary text-white rounded-full">添加</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 发布设置 -->
+                <div class="mb-6">
+                    <label class="block text-dark font-medium mb-2">发布设置</label>
+                    <div class="space-y-3">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/30">
+                            <span class="ml-2 text-gray-700">发布后通知我的粉丝</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/30">
+                            <span class="ml-2 text-gray-700">允许其他用户评论</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/30">
+                            <span class="ml-2 text-gray-700">同步到我的动态</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="flex flex-wrap justify-end gap-4 pt-6 border-t border-gray-100">
+                    <button class="px-6 py-2.5 border border-gray-300 text-dark rounded-lg hover:bg-gray-50 transition">保存草稿</button>
+                    <button class="px-8 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition">发布帖子</button>
+                </div>
+            </div>
+            
+            <!-- 发布回复表单（默认隐藏） -->
+            <div id="replyForm" class="hidden">
+                <!-- 回复帖子 -->
+                <div class="mb-6">
+                    <label class="block text-dark font-medium mb-2">回复到哪个帖子</label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg form-focus appearance-none">
+                            <option value="">请选择帖子</option>
+                            <option value="摄影技巧分享">分享一下最近拍的照片，大家觉得怎么样？</option>
+                            <option value="新手器材推荐">新手如何选择第一台相机？</option>
+                            <option value="夜景拍摄">如何拍出漂亮的夜景照片？</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
+                            <i class="fa fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 回复内容 -->
+                <div class="mb-6">
+                    <label class="block text-dark font-medium mb-2">回复内容</label>
+                    <div class="border border-gray-300 rounded-lg overflow-hidden">
+                        <!-- 编辑器工具栏 -->
+                        <div class="flex flex-wrap items-center gap-1 px-3 py-2 bg-gray-50 border-b border-gray-300">
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="字体加粗">
+                                <i class="fa fa-bold"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="字体斜体">
+                                <i class="fa fa-italic"></i>
+                            </button>
+                            <span class="h-4 border-r border-gray-300 mx-1"></span>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入图片">
+                                <i class="fa fa-image"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="表情">
+                                <i class="fa fa-smile-o"></i>
+                            </button>
+                            <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="@用户">
+                                <i class="fa fa-at"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- 内容输入框 -->
+                        <textarea placeholder="请输入回复内容..." 
+                                  class="w-full px-4 py-3 min-h-[120px] resize-none form-focus"></textarea>
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="flex flex-wrap justify-end gap-4 pt-6 border-t border-gray-100">
+                    <button class="px-6 py-2.5 border border-gray-300 text-dark rounded-lg hover:bg-gray-50 transition">取消</button>
+                    <button class="px-8 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition">发布回复</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 发布须知 -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+            <h2 class="text-lg font-bold text-dark mb-4">发布须知</h2>
+            <ul class="text-gray-700 text-sm space-y-2">
+                <li class="flex items-start">
+                    <i class="fa fa-info-circle text-primary mt-1 mr-2"></i>
+                    <span>请遵守百度贴吧的用户协议和社区规范，文明用语，理性讨论。</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa fa-info-circle text-primary mt-1 mr-2"></i>
+                    <span>禁止发布包含政治敏感、色情暴力、谣言诈骗、广告推广等违法违规内容。</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa fa-info-circle text-primary mt-1 mr-2"></i>
+                    <span>尊重他人知识产权，转载内容请注明来源，避免侵权。</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa fa-info-circle text-primary mt-1 mr-2"></i>
+                    <span>发布内容将接受系统和人工审核，违规内容将被删除并可能导致账号封禁。</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa fa-info-circle text-primary mt-1 mr-2"></i>
+                    <span>如有任何问题或建议，请联系贴吧客服。</span>
+                </li>
+            </ul>
+        </div>
+    </main>
+    
+    <!-- 底部导航栏（移动端） -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg z-40">
+        <div class="grid grid-cols-5 gap-1">
+            <a href="首页.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <i class="fa fa-home text-xl"></i>
+                <span class="text-xs mt-1">首页</span>
+            </a>
+            <a href="吧广场.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <i class="fa fa-compass text-xl"></i>
+                <span class="text-xs mt-1">广场</span>
+            </a>
+            <a href="发布中心.html" class="flex flex-col items-center py-2 text-primary">
+                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center -mt-4">
+                    <i class="fa fa-pencil"></i>
+                </div>
+                <span class="text-xs mt-1">发布</span>
+            </a>
+            <a href="消息.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <i class="fa fa-bell text-xl"></i>
+                <span class="text-xs mt-1">消息</span>
+            </a>
+            <a href="个人信息.html" class="flex flex-col items-center py-2 text-gray-500 hover:text-dark transition">
+                <i class="fa fa-user text-xl"></i>
+                <span class="text-xs mt-1">我的</span>
+            </a>
+        </div>
+    </nav>
+    
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href'))?.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 响应式菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                alert('菜单按钮被点击');
+            });
+        }
+        
+        // 切换发布类型
+        const postTab = document.getElementById('postTab');
+        const replyTab = document.getElementById('replyTab');
+        const postForm = document.getElementById('postForm');
+        const replyForm = document.getElementById('replyForm');
+        
+        if (postTab && replyTab && postForm && replyForm) {
+            postTab.addEventListener('click', () => {
+                // 切换标签样式
+                postTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+                postTab.classList.remove('text-gray-500');
+                replyTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                replyTab.classList.add('text-gray-500');
+                
+                // 切换表单显示
+                postForm.classList.remove('hidden');
+                replyForm.classList.add('hidden');
+            });
+            
+            replyTab.addEventListener('click', () => {
+                // 切换标签样式
+                replyTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+                replyTab.classList.remove('text-gray-500');
+                postTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                postTab.classList.add('text-gray-500');
+                
+                // 切换表单显示
+                replyForm.classList.remove('hidden');
+                postForm.classList.add('hidden');
+            });
+        }
+        
+        // 图片上传预览
+        const uploadBtn = document.getElementById('uploadBtn');
+        const previewContainer = document.getElementById('previewContainer');
+        
+        if (uploadBtn && previewContainer) {
+            const fileInput = uploadBtn.querySelector('input[type="file"]');
+            
+            fileInput.addEventListener('change', function(e) {
+                const files = e.target.files;
+                if (files && files.length > 0) {
+                    previewContainer.classList.remove('hidden');
+                    previewContainer.classList.add('flex', 'flex-wrap', 'gap-3');
+                    
+                    // 简单的预览功能（实际应用中需要更完善的文件处理）
+                    for (let i = 0; i < Math.min(files.length, 9); i++) {
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'w-24 h-24 relative';
+                        previewItem.innerHTML = `
+                            <div class="absolute inset-0 bg-gray-200 rounded-lg flex items-center justify-center">
+                                <i class="fa fa-image text-gray-400 text-2xl"></i>
+                            </div>
+                            <button class="absolute top-1 right-1 w-6 h-6 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition delete-img">
+                                <i class="fa fa-times text-xs"></i>
+                            </button>
+                        `;
+                        previewContainer.appendChild(previewItem);
+                    }
+                }
+            });
+            
+            // 删除预览图
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.delete-img')) {
+                    const previewItem = e.target.closest('.delete-img').closest('.w-24');
+                    if (previewItem) {
+                        previewItem.remove();
+                    }
+                    
+                    if (previewContainer.children.length === 0) {
+                        previewContainer.classList.add('hidden');
+                        previewContainer.classList.remove('flex', 'flex-wrap', 'gap-3');
+                    }
+                }
+            });
+        }
+        
+        // 话题标签点击切换选中状态
+        const topicButtons = document.querySelectorAll('.px-3.py-1.border.border-primary.text-primary.rounded-full.text-sm');
+        topicButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('bg-primary');
+                this.classList.toggle('text-white');
+                this.classList.toggle('text-primary');
+            });
+        });
+        
+        // 表单验证（示例）
+        const submitButtons = document.querySelectorAll('button.bg-primary');
+        submitButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                // 这里可以添加表单验证逻辑
+                // 示例：简单的表单检查
+                const activeForm = document.getElementById('postForm').classList.contains('hidden') ? 'reply' : 'post';
+                
+                if (activeForm === 'post') {
+                    const titleInput = document.querySelector('#postForm input[type="text"]');
+                    const contentTextarea = document.querySelector('#postForm textarea');
+                    const selectedForum = document.querySelector('#postForm select').value;
+                    
+                    if (!selectedForum) {
+                        alert('请选择要发布的贴吧');
+                        return;
+                    }
+                    
+                    if (!titleInput.value.trim()) {
+                        alert('请输入帖子标题');
+                        return;
+                    }
+                    
+                    if (!contentTextarea.value.trim()) {
+                        alert('请输入帖子内容');
+                        return;
+                    }
+                } else {
+                    const contentTextarea = document.querySelector('#replyForm textarea');
+                    const selectedPost = document.querySelector('#replyForm select').value;
+                    
+                    if (!selectedPost) {
+                        alert('请选择要回复的帖子');
+                        return;
+                    }
+                    
+                    if (!contentTextarea.value.trim()) {
+                        alert('请输入回复内容');
+                        return;
+                    }
+                }
+                
+                // 模拟提交成功
+                alert('发布成功！');
+            });
+        });
+    </script>
+</body>
+</html>

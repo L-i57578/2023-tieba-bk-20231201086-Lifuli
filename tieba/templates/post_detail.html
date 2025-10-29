@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - 美食吧 - 百度贴吧{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- 帖子头部 -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+        <!-- 导航 -->
+        <div class="flex items-center text-sm text-gray-500 mb-4">
+            <a href="{% url 'home' %}" class="hover:text-primary">首页</a>
+            <i class="fa fa-chevron-right mx-2"></i>
+            <a href="{% url 'tieba_detail' pk=1 %}" class="hover:text-primary">美食吧</a>
+            <i class="fa fa-chevron-right mx-2"></i>
+            <span class="text-dark">帖子详情</span>
+        </div>
+        
+        <!-- 帖子内容 -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-dark mb-4">【教程】自制提拉米苏，零失败教程分享！</h1>
+            
+            <!-- 作者信息 -->
+            <div class="flex items-center mb-4">
+                <img src="https://picsum.photos/id/64/100" alt="作者头像" class="w-12 h-12 rounded-full object-cover">
+                <div class="ml-3">
+                    <div class="font-medium text-dark">美食爱好者</div>
+                    <div class="text-sm text-gray-500">Lv.5 · 2小时前</div>
+                </div>
+                <div class="ml-auto">
+                    <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
+                        关注
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 帖子正文 -->
+            <div class="prose max-w-none mb-6">
+                <p class="text-gray-700 leading-relaxed">
+                    今天给大家分享一个简单易学的提拉米苏做法，不需要烤箱，材料也很容易买到。步骤详细，新手也能一次成功！
+                </p>
+                
+                <h3 class="text-lg font-bold text-dark mt-6 mb-3">所需材料：</h3>
+                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                    <li>马斯卡彭奶酪 250g</li>
+                    <li>淡奶油 200ml</li>
+                    <li>手指饼干 适量</li>
+                    <li>浓缩咖啡 100ml</li>
+                    <li>朗姆酒 15ml（可选）</li>
+                    <li>细砂糖 60g</li>
+                    <li>可可粉 适量</li>
+                </ul>
+                
+                <h3 class="text-lg font-bold text-dark mt-6 mb-3">制作步骤：</h3>
+                <ol class="list-decimal list-inside text-gray-700 space-y-2">
+                    <li>将马斯卡彭奶酪室温软化，加入30g细砂糖，用打蛋器搅打至顺滑</li>
+                    <li>淡奶油加入剩余30g细砂糖，打发至6分发（有纹路但还能流动）</li>
+                    <li>将打发好的淡奶油分两次加入奶酪糊中，轻轻翻拌均匀</li>
+                    <li>浓缩咖啡中加入朗姆酒（可选），将手指饼干快速蘸取咖啡液</li>
+                    <li>在容器底部铺一层蘸好咖啡液的手指饼干</li>
+                    <li>铺一层奶酪糊，再铺一层手指饼干，最后铺一层奶酪糊</li>
+                    <li>放入冰箱冷藏4小时以上，食用前撒上可可粉即可</li>
+                </ol>
+                
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    小贴士：冷藏时间越长口感越好，建议冷藏过夜。如果没有马斯卡彭奶酪，可以用奶油奶酪代替，但口感会略有不同。
+                </p>
+            </div>
+            
+            <!-- 图片展示 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <img src="https://picsum.photos/id/96/400" alt="提拉米苏成品" class="w-full aspect-square object-cover rounded-lg">
+                <img src="https://picsum.photos/id/431/400" alt="制作过程" class="w-full aspect-square object-cover rounded-lg">
+                <img src="https://picsum.photos/id/312/400" alt="材料准备" class="w-full aspect-square object-cover rounded-lg">
+            </div>
+            
+            <!-- 互动数据 -->
+            <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+                <div class="flex items-center space-x-6 text-gray-500">
+                    <button class="flex items-center space-x-1 hover:text-primary transition">
+                        <i class="fa fa-thumbs-up"></i>
+                        <span>342</span>
+                    </button>
+                    <button class="flex items-center space-x-1 hover:text-primary transition">
+                        <i class="fa fa-comment"></i>
+                        <span>156</span>
+                    </button>
+                    <button class="flex items-center space-x-1 hover:text-primary transition">
+                        <i class="fa fa-eye"></i>
+                        <span>8.7k</span>
+                    </button>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 text-gray-500 hover:text-primary transition">
+                        <i class="fa fa-share-alt"></i>
+                    </button>
+                    <button class="p-2 text-gray-500 hover:text-primary transition">
+                        <i class="fa fa-bookmark"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 评论区域 -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+        <h3 class="font-bold text-dark mb-4">评论 (156)</h3>
+        
+        <!-- 发表评论 -->
+        <div class="mb-6">
+            <div class="flex items-start mb-4">
+                <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                <div class="ml-3 flex-1">
+                    <textarea placeholder="写下你的评论..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-between items-center">
+                <div class="flex space-x-2">
+                    <button class="p-2 text-gray-500 hover:text-primary transition"><i class="fa fa-image"></i></button>
+                    <button class="p-2 text-gray-500 hover:text-primary transition"><i class="fa fa-smile"></i></button>
+                    <button class="p-2 text-gray-500 hover:text-primary transition"><i class="fa fa-at"></i></button>
+                </div>
+                <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
+                    发表评论
+                </button>
+            </div>
+        </div>
+        
+        <!-- 评论列表 -->
+        <div class="space-y-6">
+            <!-- 评论1 -->
+            <div class="border-b border-gray-100 pb-6">
+                <div class="flex items-start">
+                    <img src="https://picsum.photos/id/65/100" alt="评论者头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                    <div class="ml-3 flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <span class="font-medium text-dark">厨艺大师</span>
+                                <span class="text-sm text-gray-500 ml-2">Lv.6</span>
+                            </div>
+                            <span class="text-sm text-gray-500">1小时前</span>
+                        </div>
+                        <p class="text-gray-700 mb-3">
+                            这个配方太棒了！我按照步骤做了一次，味道真的很正宗。不过我觉得可以再加一点咖啡酒，味道会更浓郁。
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                            <button class="flex items-center space-x-1 hover:text-primary transition">
+                                <i class="fa fa-thumbs-up"></i>
+                                <span>24</span>
+                            </button>
+                            <button class="flex items-center space-x-1 hover:text-primary transition">
+                                <i class="fa fa-comment"></i>
+                                <span>回复</span>
+                            </button>
+                        </div>
+                        
+                        <!-- 回复 -->
+                        <div class="mt-4 pl-4 border-l-2 border-gray-100">
+                            <div class="flex items-start">
+                                <img src="https://picsum.photos/id/64/100" alt="作者头像" class="w-8 h-8 rounded-full object-cover flex-shrink-0">
+                                <div class="ml-3">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <div>
+                                            <span class="font-medium text-dark">美食爱好者</span>
+                                            <span class="text-xs text-primary ml-2">楼主</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">30分钟前</span>
+                                    </div>
+                                    <p class="text-gray-700 text-sm">
+                                        谢谢建议！咖啡酒确实能让味道更丰富，下次我也试试看。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 评论2 -->
+            <div class="border-b border-gray-100 pb-6">
+                <div class="flex items-start">
+                    <img src="https://picsum.photos/id/66/100" alt="评论者头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                    <div class="ml-3 flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <span class="font-medium text-dark">新手小白</span>
+                                <span class="text-sm text-gray-500 ml-2">Lv.2</span>
+                            </div>
+                            <span class="text-sm text-gray-500">45分钟前</span>
+                        </div>
+                        <p class="text-gray-700 mb-3">
+                            第一次尝试就成功了！教程写得很详细，连我这种新手都能看懂。想问一下冷藏时间可以缩短吗？
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                            <button class="flex items-center space-x-1 hover:text-primary transition">
+                                <i class="fa fa-thumbs-up"></i>
+                                <span>18</span>
+                            </button>
+                            <button class="flex items-center space-x-1 hover:text-primary transition">
+                                <i class="fa fa-comment"></i>
+                                <span>回复</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 评论3 -->
+            <div class="border-b border-gray-100 pb-6">
+                <div class="flex items-start">
+                    <img src="https://picsum.photos/id/67/100" alt="评论者头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                    <div class="ml-3 flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <span class="font-medium text-dark">美食达人</span>
+                                <span class="text-sm text-gray-500 ml-2">Lv.7</span>
+                            </div>
+                            <span class="text-sm text-gray-500">1小时前</span>
+                        </div>
+                        <p class="text-gray-700 mb-3">
+                            很棒的分享！建议可以在表面撒一些巧克力碎，口感会更丰富。
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                            <button class="flex items-center space-x-1 hover:text-primary transition">
+                                <i class="fa fa-thumbs-up"></i>
+                                <span>32</span>
+                            </button>
+                            <button class="flex items-center space-x-1 hover:text-primary transition">
+                                <i class="fa fa-comment"></i>
+                                <span>回复</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 加载更多评论 -->
+        <div class="text-center mt-6">
+            <button class="px-6 py-2 border border-gray-300 text-dark rounded-full hover:bg-gray-50 transition">
+                加载更多评论
+            </button>
+        </div>
+    </div>
+    
+    <!-- 相关帖子 -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <h3 class="font-bold text-dark mb-4">相关帖子</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="{% url 'post_detail' pk=2 %}" class="block p-3 hover:bg-gray-50 rounded-md transition">
+                <h4 class="font-bold text-dark line-clamp-2 mb-2">家常菜系列：红烧肉的正确做法</h4>
+                <p class="text-sm text-gray-600 line-clamp-2">红烧肉是很多人的最爱，但要做得好吃并不容易。今天分享我的独家秘方...</p>
+                <div class="flex items-center text-xs text-gray-500 mt-2">
+                    <span>美食吧</span>
+                    <span class="mx-2">•</span>
+                    <span>128赞</span>
+                </div>
+            </a>
+            <a href="{% url 'post_detail' pk=3 %}" class="block p-3 hover:bg-gray-50 rounded-md transition">
+                <h4 class="font-bold text-dark line-clamp-2 mb-2">探店分享：这家川菜馆的麻婆豆腐绝了！</h4>
+                <p class="text-sm text-gray-600 line-clamp-2">今天去了一家新开的川菜馆，麻婆豆腐做得非常地道，麻辣鲜香...</p>
+                <div class="flex items-center text-xs text-gray-500 mt-2">
+                    <span>美食吧</span>
+                    <span class="mx-2">•</span>
+                    <span>567赞</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
