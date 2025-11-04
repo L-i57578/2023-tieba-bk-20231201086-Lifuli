@@ -12,14 +12,16 @@ urlpatterns = [
     # 前端页面路由
     path('', views.HomeView.as_view(), name='home'),
     path('tieba-square/', views.TiebaSquareView.as_view(), name='tieba_square'),
-    path('tieba/<int:pk>/', views.TiebaDetailView.as_view(), name='tieba_detail'),
-    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
     path('profile/', views.UserProfileView.as_view(), name='user_profile'),
     path('profile/edit/', views.EditProfileView.as_view(), name='edit_profile'),
     path('publish/', views.PublishCenterView.as_view(), name='publish_center'),
     path('messages/', views.MessagesView.as_view(), name='messages'),
     path('login/', views.LoginView.as_view(), name='login'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
     path('register/', views.RegisterView.as_view(), name='register'),
+    path('search/', views.GlobalSearchView.as_view(), name='global_search'),
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
+    path('tieba/<int:pk>/', views.TiebaDetailView.as_view(), name='tieba_detail'),
     
     # API路由
     path('admin/', admin.site.urls),

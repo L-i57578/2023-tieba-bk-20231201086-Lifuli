@@ -1,0 +1,4 @@
+<svg width="800" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="200" fill="#f0f0f0"/>
+  <text x="400" y="100" text-anchor="middle" dy=".3em" font-family="Arial" font-size="24" fill="#666">800x200</text>
+</svg>

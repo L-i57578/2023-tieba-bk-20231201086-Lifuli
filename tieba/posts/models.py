@@ -44,6 +44,8 @@ class Post(models.Model):
     )
     is_published = models.BooleanField(default=True, verbose_name='是否发布')
     is_deleted = models.BooleanField(default=False, verbose_name='是否删除')
+    is_top = models.BooleanField(default=False, verbose_name='是否置顶')
+    is_essence = models.BooleanField(default=False, verbose_name='是否精华')
     
     # 统计信息
     views_count = models.PositiveIntegerField(default=0, verbose_name='浏览数')

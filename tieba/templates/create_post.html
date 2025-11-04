@@ -1,0 +1,611 @@
+{% extends "base.html" %}
+
+{% block title %}发布帖子 - 百度贴吧{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-xl shadow-lg p-6">
+        <h1 class="text-2xl font-bold text-dark mb-6">发布帖子</h1>
+        
+        <form method="post" class="space-y-6" id="post-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- 贴吧选择 -->
+            <div>
+                <label for="tieba" class="block text-sm font-medium text-gray-700 mb-2">选择贴吧</label>
+                <select id="tieba" name="tieba" required 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200">
+                    <option value="">请选择贴吧</option>
+                    {% for tieba in tiebas %}
+                        <option value="{{ tieba.id }}">{{ tieba.name }}</option>
+                    {% endfor %}
+                </select>
+                <div id="tieba-error" class="text-red-500 text-sm mt-1 hidden">请选择贴吧</div>
+            </div>
+            
+            <!-- 帖子标题 -->
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700 mb-2">帖子标题</label>
+                <input type="text" id="title" name="title" required maxlength="100"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                       placeholder="请输入帖子标题（最多100个字符）">
+                <div class="flex justify-between mt-1">
+                    <div id="title-error" class="text-red-500 text-sm hidden">请输入帖子标题</div>
+                    <div id="title-counter" class="text-gray-500 text-sm">0/100</div>
+                </div>
+            </div>
+            
+            <!-- 帖子内容 -->
+            <div>
+                <label for="content" class="block text-sm font-medium text-gray-700 mb-2">帖子内容</label>
+                <textarea id="content" name="content" rows="10" required
+                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                          placeholder="请输入帖子内容"></textarea>
+                <div class="flex justify-between mt-1">
+                    <div id="content-error" class="text-red-500 text-sm hidden">请输入帖子内容</div>
+                    <div id="content-counter" class="text-gray-500 text-sm">0 字符</div>
+                </div>
+            </div>
+            
+            <!-- 图片上传 -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">上传图片（可选）</label>
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-all duration-200">
+                    <div class="flex flex-col items-center justify-center">
+                        <i class="fa fa-image text-4xl text-gray-400 mb-3"></i>
+                        <p class="text-gray-600 mb-2">点击选择图片或拖拽图片到这里</p>
+                        <p class="text-sm text-gray-500 mb-4">支持 JPG、PNG、GIF 格式，单张图片不超过 10MB</p>
+                        <input type="file" id="images" name="images" multiple accept="image/*" 
+                               class="hidden" />
+                        <button type="button" onclick="document.getElementById('images').click()" 
+                                class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-all duration-200 font-medium">
+                            选择图片
+                        </button>
+                    </div>
+                </div>
+                <div id="image-preview" class="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 hidden">
+                    <!-- 图片预览区域 -->
+                </div>
+                <div id="image-error" class="text-red-500 text-sm mt-1 hidden"></div>
+            </div>
+            
+            <!-- 帖子类型 -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">帖子类型</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <label class="inline-flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-all duration-200 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                        <input type="radio" name="post_type" value="normal" checked 
+                               class="text-primary focus:ring-primary mr-2">
+                        <span class="text-sm font-medium">普通帖</span>
+                    </label>
+                    <label class="inline-flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-all duration-200 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                        <input type="radio" name="post_type" value="sticky" 
+                               class="text-primary focus:ring-primary mr-2">
+                        <span class="text-sm font-medium">置顶帖</span>
+                    </label>
+                    <label class="inline-flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-all duration-200 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                        <input type="radio" name="post_type" value="essence" 
+                               class="text-primary focus:ring-primary mr-2">
+                        <span class="text-sm font-medium">精华帖</span>
+                    </label>
+                    <label class="inline-flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-all duration-200 has-[:checked]:border-primary has-[:checked]:bg-primary/5">
+                        <input type="radio" name="post_type" value="announcement" 
+                               class="text-primary focus:ring-primary mr-2">
+                        <span class="text-sm font-medium">公告帖</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="flex justify-end space-x-4 pt-4 border-t border-gray-100">
+                <a href="{% url 'publish_center' %}" 
+                   class="px-6 py-2 border border-gray-300 text-dark rounded-lg hover:bg-gray-50 transition-all duration-200 font-medium">
+                    取消
+                </a>
+                <button type="submit" id="submit-btn"
+                        class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-all duration-200 font-medium shadow-md hover:shadow-lg">
+                    发布帖子
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// 全局变量
+let isAutoSaving = false;
+let lastSavedContent = '';
+
+// 获取DOM元素
+const titleInput = document.getElementById('title');
+const contentInput = document.getElementById('content');
+const tiebaSelect = document.getElementById('tieba');
+const titleCounter = document.getElementById('title-counter');
+const contentCounter = document.getElementById('content-counter');
+const form = document.getElementById('post-form');
+const submitBtn = document.getElementById('submit-btn');
+
+// 创建实时预览区域
+const previewContainer = document.createElement('div');
+previewContainer.className = 'mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 hidden';
+previewContainer.innerHTML = `
+    <h3 class="text-lg font-semibold mb-2">实时预览</h3>
+    <div id="preview-content" class="text-gray-700"></div>
+`;
+contentInput.parentNode.appendChild(previewContainer);
+
+// 创建智能提示区域
+const suggestionsContainer = document.createElement('div');
+suggestionsContainer.className = 'absolute z-10 w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 hidden';
+suggestionsContainer.innerHTML = `
+    <div class="p-2 text-sm text-gray-500">智能提示</div>
+    <div id="suggestions-list" class="max-h-32 overflow-y-auto"></div>
+`;
+titleInput.parentNode.appendChild(suggestionsContainer);
+
+// 标题智能提示数据
+const titleSuggestions = [
+    '求助：关于...的问题',
+    '分享：我的...经验',
+    '讨论：大家觉得...怎么样',
+    '教程：如何...',
+    '新闻：最新...消息',
+    '投票：你更喜欢...',
+    '活动：...活动报名',
+    '资源：...资料分享'
+];
+
+// 实时字符计数和验证
+titleInput.addEventListener('input', function() {
+    const count = this.value.length;
+    titleCounter.textContent = `${count}/100`;
+    
+    if (count > 100) {
+        titleCounter.classList.add('text-red-500');
+        titleCounter.classList.remove('text-gray-500');
+        this.classList.add('border-red-500');
+    } else {
+        titleCounter.classList.remove('text-red-500');
+        titleCounter.classList.add('text-gray-500');
+        this.classList.remove('border-red-500');
+    }
+    
+    // 显示智能提示
+    showTitleSuggestions(this.value);
+    
+    // 自动保存草稿
+    autoSaveDraft();
+});
+
+contentInput.addEventListener('input', function() {
+    const count = this.value.length;
+    contentCounter.textContent = `${count} 字符`;
+    
+    // 实时预览
+    updatePreview(this.value);
+    
+    // 自动保存草稿
+    autoSaveDraft();
+});
+
+// 贴吧选择交互
+tiebaSelect.addEventListener('change', function() {
+    if (this.value) {
+        this.classList.remove('border-red-500');
+        document.getElementById('tieba-error').classList.add('hidden');
+    }
+    autoSaveDraft();
+});
+
+// 帖子类型选择交互
+const postTypeRadios = document.querySelectorAll('input[name="post_type"]');
+postTypeRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+        // 添加选中动画效果
+        const labels = document.querySelectorAll('label[class*="has-[:checked]"]');
+        labels.forEach(label => {
+            label.classList.remove('border-primary', 'bg-primary/5');
+        });
+        
+        const currentLabel = this.closest('label');
+        currentLabel.classList.add('border-primary', 'bg-primary/5');
+        
+        autoSaveDraft();
+    });
+});
+
+// 显示标题智能提示
+function showTitleSuggestions(input) {
+    if (input.length > 2) {
+        const filtered = titleSuggestions.filter(suggestion => 
+            suggestion.toLowerCase().includes(input.toLowerCase())
+        );
+
+// 图片上传功能
+const imageInput = document.getElementById('images');
+const imagePreview = document.getElementById('image-preview');
+const imageError = document.getElementById('image-error');
+
+// 图片上传事件处理
+imageInput.addEventListener('change', function(e) {
+    const files = e.target.files;
+    imagePreview.innerHTML = '';
+    imagePreview.classList.remove('hidden');
+    
+    // 验证文件数量和大小
+    if (files.length > 9) {
+        showImageError('最多只能上传9张图片');
+        return;
+    }
+    
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // 验证文件类型和大小
+        if (!file.type.startsWith('image/')) {
+            showImageError('请上传图片文件');
+            continue;
+        }
+        
+        if (file.size > 10 * 1024 * 1024) {
+            showImageError('单张图片不能超过10MB');
+            continue;
+        }
+        
+        // 创建预览
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'relative group';
+            previewItem.innerHTML = `
+                <img src="${e.target.result}" alt="预览图片" class="w-full h-32 object-cover rounded-lg">
+                <button type="button" class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200" onclick="removeImagePreview(this)">
+                    ×
+                </button>
+            `;
+            imagePreview.appendChild(previewItem);
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    hideImageError();
+});
+
+// 拖拽上传功能
+const dropZone = imageInput.closest('div');
+dropZone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    dropZone.classList.add('border-primary', 'bg-primary/5');
+});
+
+dropZone.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    dropZone.classList.remove('border-primary', 'bg-primary/5');
+});
+
+dropZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    dropZone.classList.remove('border-primary', 'bg-primary/5');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        imageInput.files = files;
+        imageInput.dispatchEvent(new Event('change'));
+    }
+});
+
+// 移除图片预览
+function removeImagePreview(button) {
+    const previewItem = button.closest('.relative');
+    previewItem.remove();
+    
+    // 更新文件输入
+    const dataTransfer = new DataTransfer();
+    const currentFiles = imageInput.files;
+    const previewItems = imagePreview.querySelectorAll('.relative');
+    
+    // 重新构建文件列表
+    for (let i = 0; i < currentFiles.length; i++) {
+        const file = currentFiles[i];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // 检查这个文件是否还在预览中
+            const isFileInPreview = Array.from(previewItems).some(item => 
+                item.querySelector('img').src === e.target.result
+            );
+            
+            if (isFileInPreview) {
+                dataTransfer.items.add(file);
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    // 延迟设置文件列表以确保所有文件都被处理
+    setTimeout(() => {
+        imageInput.files = dataTransfer.files;
+        
+        // 如果没有图片了，隐藏预览区域
+        if (imagePreview.children.length === 0) {
+            imagePreview.classList.add('hidden');
+        }
+    }, 100);
+}
+
+// 显示图片错误
+function showImageError(message) {
+    imageError.textContent = message;
+    imageError.classList.remove('hidden');
+}
+
+// 隐藏图片错误
+function hideImageError() {
+    imageError.classList.add('hidden');
+}
+        
+        if (filtered.length > 0) {
+            const suggestionsList = document.getElementById('suggestions-list');
+            suggestionsList.innerHTML = filtered.map(suggestion => 
+                `<div class="px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0" 
+                      onclick="selectSuggestion('${suggestion}')">
+                    ${suggestion}
+                </div>`
+            ).join('');
+            suggestionsContainer.classList.remove('hidden');
+        } else {
+            suggestionsContainer.classList.add('hidden');
+        }
+    } else {
+        suggestionsContainer.classList.add('hidden');
+    }
+}
+
+// 选择智能提示
+function selectSuggestion(suggestion) {
+    titleInput.value = suggestion;
+    titleInput.dispatchEvent(new Event('input'));
+    suggestionsContainer.classList.add('hidden');
+    titleInput.focus();
+}
+
+// 更新实时预览
+function updatePreview(content) {
+    const previewContent = document.getElementById('preview-content');
+    if (content.trim()) {
+        previewContainer.classList.remove('hidden');
+        previewContent.innerHTML = content.replace(/\n/g, '<br>');
+    } else {
+        previewContainer.classList.add('hidden');
+    }
+}
+
+// 自动保存草稿
+function autoSaveDraft() {
+    if (!isAutoSaving) {
+        isAutoSaving = true;
+        
+        const draft = {
+            tieba: tiebaSelect.value,
+            title: titleInput.value,
+            content: contentInput.value,
+            postType: document.querySelector('input[name="post_type"]:checked').value,
+            timestamp: new Date().toISOString()
+        };
+        
+        // 只有当内容有变化时才保存
+        if (JSON.stringify(draft) !== lastSavedContent) {
+            localStorage.setItem('post_draft', JSON.stringify(draft));
+            lastSavedContent = JSON.stringify(draft);
+            
+            // 显示保存提示
+            showToast('草稿已自动保存', 'success');
+        }
+        
+        setTimeout(() => {
+            isAutoSaving = false;
+        }, 1000);
+    }
+}
+
+// 加载草稿
+function loadDraft() {
+    const draft = localStorage.getItem('post_draft');
+    if (draft) {
+        const draftData = JSON.parse(draft);
+        
+        // 询问用户是否加载草稿
+        if (confirm('检测到未发布的草稿，是否加载？')) {
+            tiebaSelect.value = draftData.tieba;
+            titleInput.value = draftData.title;
+            contentInput.value = draftData.content;
+            
+            // 触发输入事件以更新计数和预览
+            titleInput.dispatchEvent(new Event('input'));
+            contentInput.dispatchEvent(new Event('input'));
+            
+            // 设置帖子类型
+            document.querySelector(`input[value="${draftData.postType}"]`).checked = true;
+            document.querySelector(`input[value="${draftData.postType}"]`).dispatchEvent(new Event('change'));
+            
+            showToast('草稿已加载', 'success');
+        }
+    }
+}
+
+// 显示Toast提示
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `fixed top-4 right-4 px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full ${type === 'success' ? 'bg-green-500 text-white' : 'bg-blue-500 text-white'}`;
+    toast.textContent = message;
+    
+    document.body.appendChild(toast);
+    
+    // 动画显示
+    setTimeout(() => {
+        toast.classList.remove('translate-x-full');
+        toast.classList.add('translate-x-0');
+    }, 100);
+    
+    // 3秒后自动隐藏
+    setTimeout(() => {
+        toast.classList.remove('translate-x-0');
+        toast.classList.add('translate-x-full');
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300);
+    }, 3000);
+}
+
+// 键盘快捷键
+document.addEventListener('keydown', function(e) {
+    // Ctrl + S: 保存草稿
+    if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        autoSaveDraft();
+        showToast('草稿已手动保存', 'success');
+    }
+    
+    // Ctrl + Enter: 快速提交
+    if (e.ctrlKey && e.key === 'Enter') {
+        e.preventDefault();
+        submitBtn.click();
+    }
+    
+    // Esc: 隐藏提示框
+    if (e.key === 'Escape') {
+        suggestionsContainer.classList.add('hidden');
+    }
+    
+    // Tab: 在内容区域插入缩进
+    if (e.key === 'Tab' && e.target === contentInput) {
+        e.preventDefault();
+        const start = contentInput.selectionStart;
+        const end = contentInput.selectionEnd;
+        contentInput.value = contentInput.value.substring(0, start) + '    ' + contentInput.value.substring(end);
+        contentInput.selectionStart = contentInput.selectionEnd = start + 4;
+        contentInput.dispatchEvent(new Event('input'));
+    }
+});
+
+// 点击外部隐藏提示框
+document.addEventListener('click', function(e) {
+    if (!titleInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+        suggestionsContainer.classList.add('hidden');
+    }
+});
+
+// 表单提交处理
+form.addEventListener('submit', function(e) {
+    let isValid = true;
+    
+    // 验证所有字段
+    const validations = [
+        { element: tiebaSelect, errorId: 'tieba-error', message: '请选择贴吧' },
+        { element: titleInput, errorId: 'title-error', message: '请输入帖子标题' },
+        { element: contentInput, errorId: 'content-error', message: '请输入帖子内容' }
+    ];
+    
+    validations.forEach(validation => {
+        const errorElement = document.getElementById(validation.errorId);
+        if (!validation.element.value.trim()) {
+            errorElement.classList.remove('hidden');
+            validation.element.classList.add('border-red-500');
+            isValid = false;
+            
+            // 添加错误动画
+            validation.element.style.animation = 'shake 0.5s ease-in-out';
+            setTimeout(() => {
+                validation.element.style.animation = '';
+            }, 500);
+        } else {
+            errorElement.classList.add('hidden');
+            validation.element.classList.remove('border-red-500');
+        }
+    });
+    
+    if (!isValid) {
+        e.preventDefault();
+        showToast('请完善表单信息', 'error');
+    } else {
+        // 提交时禁用按钮并显示加载状态
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>发布中...';
+        
+        // 清除草稿
+        localStorage.removeItem('post_draft');
+        showToast('帖子发布中...', 'info');
+    }
+});
+
+// 页面加载时初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 加载草稿
+    loadDraft();
+    
+    // 为所有输入框添加焦点效果
+    const inputs = document.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.classList.add('ring-2', 'ring-primary/20');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.classList.remove('ring-2', 'ring-primary/20');
+        });
+    });
+    
+    // 显示键盘快捷键提示
+    setTimeout(() => {
+        showToast('提示：Ctrl+S保存草稿，Ctrl+Enter快速提交', 'info');
+    }, 2000);
+});
+
+// 添加CSS动画和样式
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+    
+    .toast-enter {
+        animation: slideIn 0.3s ease-out;
+    }
+    
+    .toast-exit {
+        animation: slideOut 0.3s ease-in;
+    }
+    
+    /* 自定义滚动条 */
+    #suggestions-list::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    #suggestions-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    #suggestions-list::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+    
+    #suggestions-list::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

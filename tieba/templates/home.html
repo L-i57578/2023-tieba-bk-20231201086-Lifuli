@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}贴吧首页 - 百度贴吧{% endblock %}
 
@@ -9,7 +10,7 @@
         {% if user.is_authenticated %}
         <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
             <div class="flex flex-col items-center py-4">
-                <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-20 h-20 rounded-full object-cover border-4 border-primary/10">
+                <img src="{% static 'images/placeholder-100x100.svg' %}" alt="用户头像" class="w-20 h-20 rounded-full object-cover border-4 border-primary/10">
                 <h3 class="mt-3 text-lg font-bold text-dark">{{ user.username }}</h3>
                 <p class="text-gray-500 text-sm">Lv.5 贴吧用户</p>
                 <div class="mt-4 flex space-x-2">
@@ -38,21 +39,21 @@
             </h3>
             <div class="space-y-3">
                 <a href="{% url 'tieba_detail' pk=1 %}" class="flex items-center p-2 hover:bg-gray-50 rounded-md transition">
-                    <img src="https://picsum.photos/id/237/100" alt="贴吧图标" class="w-10 h-10 rounded-md object-cover">
+                    <img src="{% static 'images/placeholder-100x100.svg' %}" alt="贴吧图标" class="w-10 h-10 rounded-md object-cover">
                     <div class="ml-3 flex-1">
                         <h4 class="font-medium text-dark">摄影吧</h4>
                         <p class="text-xs text-gray-500">今日: 128 帖子</p>
                     </div>
                 </a>
                 <a href="{% url 'tieba_detail' pk=2 %}" class="flex items-center p-2 hover:bg-gray-50 rounded-md transition">
-                    <img src="https://picsum.photos/id/24/100" alt="贴吧图标" class="w-10 h-10 rounded-md object-cover">
+                    <img src="{% static 'images/placeholder-100x100.svg' %}" alt="贴吧图标" class="w-10 h-10 rounded-md object-cover">
                     <div class="ml-3 flex-1">
                         <h4 class="font-medium text-dark">旅行吧</h4>
                         <p class="text-xs text-gray-500">今日: 86 帖子</p>
                     </div>
                 </a>
                 <a href="{% url 'tieba_detail' pk=3 %}" class="flex items-center p-2 hover:bg-gray-50 rounded-md transition">
-                    <img src="https://picsum.photos/id/96/100" alt="贴吧图标" class="w-10 h-10 rounded-md object-cover">
+                    <img src="{% static 'images/placeholder-100x100.svg' %}" alt="贴吧图标" class="w-10 h-10 rounded-md object-cover">
                     <div class="ml-3 flex-1">
                         <h4 class="font-medium text-dark">美食吧</h4>
                         <p class="text-xs text-gray-500">今日: 204 帖子</p>
@@ -69,22 +70,22 @@
             <h3 class="font-bold text-dark mb-3">推荐贴吧</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <a href="{% url 'tieba_detail' pk=1 %}" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-md transition">
-                    <img src="https://picsum.photos/id/96/100" alt="美食吧" class="w-14 h-14 rounded-full object-cover mb-2">
+                    <img src="{% static 'images/placeholder-100x100.svg' %}" alt="美食吧" class="w-14 h-14 rounded-full object-cover mb-2">
                     <span class="text-sm font-medium text-dark">美食吧</span>
                     <span class="text-xs text-gray-500">238万关注</span>
                 </a>
                 <a href="{% url 'tieba_detail' pk=2 %}" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-md transition">
-                    <img src="https://picsum.photos/id/24/100" alt="旅行吧" class="w-14 h-14 rounded-full object-cover mb-2">
+                    <img src="{% static 'images/placeholder-100x100.svg' %}" alt="旅行吧" class="w-14 h-14 rounded-full object-cover mb-2">
                     <span class="text-sm font-medium text-dark">旅行吧</span>
                     <span class="text-xs text-gray-500">186万关注</span>
                 </a>
                 <a href="{% url 'tieba_detail' pk=3 %}" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-md transition">
-                    <img src="https://picsum.photos/id/237/100" alt="摄影吧" class="w-14 h-14 rounded-full object-cover mb-2">
+                    <img src="{% static 'images/placeholder-100x100.svg' %}" alt="摄影吧" class="w-14 h-14 rounded-full object-cover mb-2">
                     <span class="text-sm font-medium text-dark">摄影吧</span>
                     <span class="text-xs text-gray-500">156万关注</span>
                 </a>
                 <a href="{% url 'tieba_detail' pk=4 %}" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-md transition">
-                    <img src="https://picsum.photos/id/160/100" alt="电影吧" class="w-14 h-14 rounded-full object-cover mb-2">
+                    <img src="{% static 'images/placeholder-100x100.svg' %}" alt="电影吧" class="w-14 h-14 rounded-full object-cover mb-2">
                     <span class="text-sm font-medium text-dark">电影吧</span>
                     <span class="text-xs text-gray-500">132万关注</span>
                 </a>
@@ -92,38 +93,62 @@
         </div>
         
         <!-- 热门帖子 -->
-        <div class="bg-white rounded-xl shadow-sm p-4">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-bold text-dark">热门帖子</h3>
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100/50 backdrop-blur-sm">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-bold text-dark text-xl">热门帖子</h3>
                 <div class="flex space-x-2">
-                    <button class="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">推荐</button>
-                    <button class="px-3 py-1 hover:bg-gray-100 rounded-full text-sm">最新</button>
-                    <button class="px-3 py-1 hover:bg-gray-100 rounded-full text-sm">热门</button>
+                    <button class="px-4 py-2 bg-gradient-to-r from-primary to-primary/80 text-white rounded-full text-sm font-medium shadow-sm hover:shadow-md transition-all duration-300">推荐</button>
+                    <button class="px-4 py-2 bg-white border border-gray-200 text-dark rounded-full text-sm font-medium hover:bg-gray-50 hover:border-primary/30 transition-all duration-300">最新</button>
+                    <button class="px-4 py-2 bg-white border border-gray-200 text-dark rounded-full text-sm font-medium hover:bg-gray-50 hover:border-primary/30 transition-all duration-300">热门</button>
                 </div>
             </div>
             
             <!-- 帖子列表 -->
-            <div class="space-y-4">
-                <a href="{% url 'post_detail' pk=1 %}" class="block p-3 hover:bg-gray-50 rounded-md transition card-hover">
+            <div class="space-y-6">
+                <a href="{% url 'post_detail' pk=1 %}" class="block p-6 bg-gradient-to-br from-white to-gray-50/50 border border-gray-100/50 rounded-xl shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 group">
                     <div class="flex items-start">
-                        <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
-                        <div class="ml-3 flex-1">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-medium text-dark line-clamp-1">用户昵称</h3>
-                                <span class="text-xs text-gray-500">2小时前</span>
+                        <div class="relative">
+                            <img src="{% static 'images/placeholder-100x100.svg' %}" alt="用户头像" class="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-white shadow-sm group-hover:border-primary/30 transition-all duration-300">
+                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="font-semibold text-dark">用户昵称</h3>
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded-full font-medium">Lv.5</span>
+                                </div>
+                                <span class="text-sm text-gray-500">2小时前</span>
                             </div>
-                            <h4 class="font-bold text-dark mt-1 line-clamp-2">分享一下最近拍的照片，大家觉得怎么样？欢迎评论区交流摄影技巧！</h4>
-                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">这组照片是在上周末去郊外拍摄的，天气非常好，光线也很棒。第一次尝试这种风格，希望大家喜欢...</p>
-                            <div class="mt-3 grid grid-cols-3 gap-2">
-                                <img src="https://picsum.photos/id/237/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
-                                <img src="https://picsum.photos/id/24/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
-                                <img src="https://picsum.photos/id/26/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
+                            <h4 class="font-bold text-dark text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300">分享一下最近拍的照片，大家觉得怎么样？欢迎评论区交流摄影技巧！</h4>
+                            <p class="text-gray-600 mb-4 line-clamp-2">这组照片是在上周末去郊外拍摄的，天气非常好，光线也很棒。第一次尝试这种风格，希望大家喜欢...</p>
+                            <div class="mb-4 grid grid-cols-3 gap-3">
+                                <div class="relative overflow-hidden rounded-lg group-hover:shadow-md transition-all duration-300">
+                                    <img src="{% static 'images/placeholder-300x300.svg' %}" alt="帖子图片" class="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <div class="relative overflow-hidden rounded-lg group-hover:shadow-md transition-all duration-300">
+                                    <img src="{% static 'images/placeholder-300x300.svg' %}" alt="帖子图片" class="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <div class="relative overflow-hidden rounded-lg group-hover:shadow-md transition-all duration-300">
+                                    <img src="{% static 'images/placeholder-300x300.svg' %}" alt="帖子图片" class="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
                             </div>
-                            <div class="mt-3 flex items-center text-sm text-gray-500">
-                                <span class="flex items-center mr-4"><i class="fa fa-thumbs-up mr-1"></i> 128</span>
-                                <span class="flex items-center mr-4"><i class="fa fa-comment mr-1"></i> 36</span>
-                                <span class="flex items-center mr-4"><i class="fa fa-eye mr-1"></i> 2.4k</span>
-                                <span class="flex items-center"><i class="fa fa-share-alt mr-1"></i> 分享</span>
+                            <div class="flex items-center text-sm text-gray-500 space-x-6">
+                                <span class="flex items-center space-x-1 hover:text-red-500 transition-colors duration-300">
+                                    <i class="fa fa-thumbs-up"></i>
+                                    <span>128</span>
+                                </span>
+                                <span class="flex items-center space-x-1 hover:text-blue-500 transition-colors duration-300">
+                                    <i class="fa fa-comment"></i>
+                                    <span>36</span>
+                                </span>
+                                <span class="flex items-center space-x-1 hover:text-green-500 transition-colors duration-300">
+                                    <i class="fa fa-eye"></i>
+                                    <span>2.4k</span>
+                                </span>
+                                <span class="flex items-center space-x-1 hover:text-purple-500 transition-colors duration-300">
+                                    <i class="fa fa-share-alt"></i>
+                                    <span>分享</span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -131,7 +156,7 @@
                 
                 <a href="{% url 'post_detail' pk=2 %}" class="block p-3 hover:bg-gray-50 rounded-md transition card-hover">
                     <div class="flex items-start">
-                        <img src="https://picsum.photos/id/65/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                        <img src="{% static 'images/placeholder-100x100.svg' %}" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
                         <div class="ml-3 flex-1">
                             <div class="flex items-center justify-between">
                                 <h3 class="font-medium text-dark line-clamp-1">美食达人</h3>
@@ -140,9 +165,9 @@
                             <h4 class="font-bold text-dark mt-1 line-clamp-2">自制提拉米苏，零失败教程分享！</h4>
                             <p class="text-sm text-gray-600 mt-1 line-clamp-2">今天给大家分享一个简单易学的提拉米苏做法，不需要烤箱，材料也很容易买到。步骤详细，新手也能一次成功...</p>
                             <div class="mt-3 grid grid-cols-3 gap-2">
-                                <img src="https://picsum.photos/id/96/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
-                                <img src="https://picsum.photos/id/431/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
-                                <img src="https://picsum.photos/id/312/300" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
+                                <img src="{% static 'images/placeholder-300x300.svg' %}" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
+                                <img src="{% static 'images/placeholder-300x300.svg' %}" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
+                                <img src="{% static 'images/placeholder-300x300.svg' %}" alt="帖子图片" class="w-full aspect-square object-cover rounded-md">
                             </div>
                             <div class="mt-3 flex items-center text-sm text-gray-500">
                                 <span class="flex items-center mr-4"><i class="fa fa-thumbs-up mr-1"></i> 342</span>
@@ -156,16 +181,16 @@
                 
                 <a href="{% url 'post_detail' pk=3 %}" class="block p-3 hover:bg-gray-50 rounded-md transition card-hover">
                     <div class="flex items-start">
-                        <img src="https://picsum.photos/id/66/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                        <img src="{% static 'images/placeholder-100x100.svg' %}" alt="用户头像" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
                         <div class="ml-3 flex-1">
                             <div class="flex items-center justify-between">
                                 <h3 class="font-medium text-dark line-clamp-1">旅行者</h3>
                                 <span class="text-xs text-gray-500">昨天</span>
                             </div>
                             <h4 class="font-bold text-dark mt-1 line-clamp-2">【攻略】云南丽江三日游最佳路线推荐</h4>
-                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">刚从丽江回来，整理了一份详细的三日游攻略，包括交通、住宿、景点推荐和美食推荐。希望对大家有帮助...</p>
+                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">刚从丽江回来，整理出了一份详细的三日游攻略，包括交通、住宿、景点推荐和美食推荐。希望对大家有帮助...</p>
                             <div class="mt-3">
-                                <img src="https://picsum.photos/id/24/800/400" alt="帖子图片" class="w-full aspect-video object-cover rounded-md">
+                                <img src="{% static 'images/placeholder-800x400.svg' %}" alt="帖子图片" class="w-full aspect-video object-cover rounded-md">
                             </div>
                             <div class="mt-3 flex items-center text-sm text-gray-500">
                                 <span class="flex items-center mr-4"><i class="fa fa-thumbs-up mr-1"></i> 567</span>
@@ -237,7 +262,7 @@
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <img src="https://picsum.photos/id/67/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+                        <img src="{% static 'images/placeholder-100x100.svg' %}" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
                         <div class="ml-3">
                             <h4 class="font-medium text-dark">摄影爱好者</h4>
                             <p class="text-xs text-gray-500">摄影博主 · 3.2万粉丝</p>
@@ -249,7 +274,7 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <img src="https://picsum.photos/id/68/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+                        <img src="{% static 'images/placeholder-100x100.svg' %}" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
                         <div class="ml-3">
                             <h4 class="font-medium text-dark">美食博主</h4>
                             <p class="text-xs text-gray-500">美食达人 · 5.8万粉丝</p>
@@ -261,7 +286,7 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <img src="https://picsum.photos/id/69/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+                        <img src="{% static 'images/placeholder-100x100.svg' %}" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
                         <div class="ml-3">
                             <h4 class="font-medium text-dark">旅行达人</h4>
                             <p class="text-xs text-gray-500">旅行博主 · 8.6万粉丝</p>

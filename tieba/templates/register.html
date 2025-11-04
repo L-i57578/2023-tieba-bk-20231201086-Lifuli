@@ -3,81 +3,111 @@
 {% block title %}注册 - 百度贴吧{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                注册百度贴吧
-            </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
-                已有账号？
-                <a href="{% url 'login' %}" class="font-medium text-primary hover:text-primary/80">
-                    立即登录
-                </a>
-            </p>
-        </div>
-        <form class="mt-8 space-y-6" action="#" method="POST">
-            <div class="space-y-4">
-                <div>
-                    <label for="username" class="block text-sm font-medium text-gray-700">用户名</label>
-                    <input id="username" name="username" type="text" required 
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" 
-                           placeholder="请输入用户名">
-                </div>
-                
-                <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-700">手机号</label>
-                    <input id="phone" name="phone" type="tel" required 
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" 
-                           placeholder="请输入手机号">
-                </div>
-                
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">密码</label>
-                    <input id="password" name="password" type="password" required 
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" 
-                           placeholder="请输入密码">
-                </div>
-                
-                <div>
-                    <label for="confirm-password" class="block text-sm font-medium text-gray-700">确认密码</label>
-                    <input id="confirm-password" name="confirm-password" type="password" required 
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" 
-                           placeholder="请再次输入密码">
-                </div>
-                
-                <div>
-                    <label for="verification-code" class="block text-sm font-medium text-gray-700">验证码</label>
-                    <div class="mt-1 flex rounded-md shadow-sm">
-                        <input id="verification-code" name="verification-code" type="text" required 
-                               class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md border border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" 
-                               placeholder="请输入验证码">
-                        <button type="button" 
-                                class="inline-flex items-center px-4 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100">
-                            获取验证码
-                        </button>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5"></div>
+    <div class="absolute top-10 left-10 w-32 h-32 bg-primary/10 rounded-full blur-xl"></div>
+    <div class="absolute bottom-10 right-10 w-40 h-40 bg-secondary/10 rounded-full blur-xl"></div>
+    
+    <div class="max-w-md w-full space-y-8 relative z-10">
+        <!-- 卡片容器 -->
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8 transform transition-all duration-500 hover:shadow-3xl">
+            <!-- Logo和标题 -->
+            <div class="text-center mb-8">
+                <div class="flex justify-center mb-4">
+                    <div class="relative">
+                        <i class="fa fa-user-plus text-primary text-5xl"></i>
+                        <div class="absolute -top-2 -right-2 w-4 h-4 bg-secondary rounded-full animate-pulse"></div>
                     </div>
                 </div>
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    注册百度贴吧
+                </h2>
+                <p class="text-gray-600 mt-2">加入贴吧社区，发现更多精彩</p>
             </div>
 
-            <div class="flex items-center">
-                <input id="agree-terms" name="agree-terms" type="checkbox" required
-                       class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
-                <label for="agree-terms" class="ml-2 block text-sm text-gray-900">
-                    我已阅读并同意
-                    <a href="#" class="text-primary hover:text-primary/80">《用户协议》</a>
-                    和
-                    <a href="#" class="text-primary hover:text-primary/80">《隐私政策》</a>
-                </label>
-            </div>
+            <!-- 注册表单 -->
+            <form class="space-y-6" method="post">
+                {% csrf_token %}
+                
+                <!-- 用户名输入框 -->
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fa fa-user text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <input id="username" name="username" type="text" required 
+                           class="block w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl bg-white/50 focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 placeholder-gray-400 group-hover:border-gray-300" 
+                           placeholder="用户名">
+                </div>
+                
+                <!-- 邮箱输入框 -->
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fa fa-envelope text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <input id="email" name="email" type="email" required 
+                           class="block w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl bg-white/50 focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 placeholder-gray-400 group-hover:border-gray-300" 
+                           placeholder="邮箱">
+                </div>
+                
+                <!-- 密码输入框 -->
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fa fa-lock text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <input id="password" name="password" type="password" required 
+                           class="block w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl bg-white/50 focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 placeholder-gray-400 group-hover:border-gray-300" 
+                           placeholder="密码">
+                </div>
+                
+                <!-- 确认密码输入框 -->
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fa fa-lock text-gray-400 group-focus-within:text-primary transition-colors"></i>
+                    </div>
+                    <input id="confirm-password" name="confirm-password" type="password" required 
+                           class="block w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl bg-white/50 focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 placeholder-gray-400 group-hover:border-gray-300" 
+                           placeholder="确认密码">
+                </div>
 
-            <div>
+                <!-- 协议同意 -->
+                <div class="flex items-center group">
+                    <label for="agree-terms" class="flex items-center cursor-pointer">
+                        <div class="relative">
+                            <input id="agree-terms" name="agree-terms" type="checkbox" required
+                                   class="sr-only peer">
+                            <div class="w-5 h-5 border-2 border-gray-300 rounded-md peer-checked:bg-primary peer-checked:border-primary transition-all duration-300 flex items-center justify-center">
+                                <i class="fa fa-check text-white text-xs opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                            </div>
+                        </div>
+                        <span class="ml-2 text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
+                            我已阅读并同意
+                            <a href="javascript:void(0);" onclick="alert('用户协议页面正在开发中...');" class="text-primary hover:text-primary/80 transition-colors">《用户协议》</a>
+                            和
+                            <a href="javascript:void(0);" onclick="alert('隐私政策页面正在开发中...');" class="text-primary hover:text-primary/80 transition-colors">《隐私政策》</a>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- 注册按钮 -->
                 <button type="submit" 
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        class="w-full py-3 px-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-primary/20">
+                    <i class="fa fa-user-plus mr-2"></i>
                     注册
                 </button>
+            </form>
+
+            <!-- 登录引导 -->
+            <div class="text-center mt-6 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-600">
+                    已有账号？
+                    <a href="{% url 'login' %}" class="font-semibold text-primary hover:text-primary/80 transition-colors group">
+                        立即登录
+                        <i class="fa fa-arrow-right ml-1 transform group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </p>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}

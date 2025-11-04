@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}消息 - 百度贴吧{% endblock %}
 
@@ -28,7 +29,7 @@
                     <!-- 消息项1 -->
                     <div class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition">
                         <div class="flex items-center">
-                            <img src="https://picsum.photos/id/65/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
+                            <img src="{% static 'images/avatar65.jpg' %}" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
                             <div class="ml-3 flex-1">
                                 <div class="flex justify-between items-center mb-1">
                                     <h4 class="font-medium text-dark">厨艺大师</h4>
@@ -42,7 +43,7 @@
                     <!-- 消息项2 -->
                     <div class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition">
                         <div class="flex items-center">
-                            <img src="https://picsum.photos/id/66/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
+                            <img src="{% static 'images/avatar66.jpg' %}" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
                             <div class="ml-3 flex-1">
                                 <div class="flex justify-between items-center mb-1">
                                     <h4 class="font-medium text-dark">美食家</h4>
@@ -56,7 +57,7 @@
                     <!-- 消息项3 -->
                     <div class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition">
                         <div class="flex items-center">
-                            <img src="https://picsum.photos/id/67/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
+                            <img src="{% static 'images/avatar67.jpg' %}" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
                             <div class="ml-3 flex-1">
                                 <div class="flex justify-between items-center mb-1">
                                     <h4 class="font-medium text-dark">旅行达人</h4>
@@ -70,7 +71,7 @@
                     <!-- 消息项4 -->
                     <div class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition">
                         <div class="flex items-center">
-                            <img src="https://picsum.photos/id/68/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
+                            <img src="{% static 'images/avatar68.jpg' %}" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
                             <div class="ml-3 flex-1">
                                 <div class="flex justify-between items-center mb-1">
                                     <h4 class="font-medium text-dark">摄影爱好者</h4>
@@ -84,7 +85,7 @@
                     <!-- 消息项5 -->
                     <div class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition">
                         <div class="flex items-center">
-                            <img src="https://picsum.photos/id/69/100" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
+                            <img src="{% static 'images/avatar69.jpg' %}" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
                             <div class="ml-3 flex-1">
                                 <div class="flex justify-between items-center mb-1">
                                     <h4 class="font-medium text-dark">系统通知</h4>
@@ -102,7 +103,7 @@
                 <!-- 聊天头部 -->
                 <div class="p-4 border-b border-gray-100">
                     <div class="flex items-center">
-                        <img src="https://picsum.photos/id/65/100" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+                        <img src="{% static 'images/avatar65.jpg' %}" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
                         <div class="ml-3">
                             <h3 class="font-bold text-dark">厨艺大师</h3>
                             <p class="text-sm text-gray-500">在线</p>
@@ -131,7 +132,7 @@
                             </div>
                             <span class="text-xs text-gray-500 mt-1 block text-right">1小时前</span>
                         </div>
-                        <img src="https://picsum.photos/id/64/100" alt="我的头像" class="w-8 h-8 rounded-full object-cover flex-shrink-0 ml-3">
+                        <img src="{% static 'images/avatar64.jpg' %}" alt="我的头像" class="w-8 h-8 rounded-full object-cover flex-shrink-0 ml-3">
                     </div>
                     
                     <!-- 对方消息 -->
@@ -153,7 +154,7 @@
                             </div>
                             <span class="text-xs text-gray-500 mt-1 block text-right">30分钟前</span>
                         </div>
-                        <img src="https://picsum.photos/id/64/100" alt="我的头像" class="w-8 h-8 rounded-full object-cover flex-shrink-0 ml-3">
+                        <img src="{% static 'images/avatar64.jpg' %}" alt="我的头像" class="w-8 h-8 rounded-full object-cover flex-shrink-0 ml-3">
                     </div>
                     
                     <!-- 对方消息 -->

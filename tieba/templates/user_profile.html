@@ -5,35 +5,40 @@
 {% block content %}
 <div class="max-w-4xl mx-auto">
     <!-- 用户信息卡片 -->
-    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+    <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl shadow-lg p-8 mb-8 border border-white/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
         <div class="flex flex-col md:flex-row items-center md:items-start">
-            <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-24 h-24 rounded-full object-cover border-4 border-primary/10">
-            <div class="md:ml-6 mt-4 md:mt-0 flex-1">
+            <div class="relative">
+                <img src="https://picsum.photos/id/64/100" alt="用户头像" class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg">
+                <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-green-400 border-2 border-white rounded-full"></div>
+            </div>
+            <div class="md:ml-8 mt-6 md:mt-0 flex-1">
                 <div class="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
-                        <h1 class="text-2xl font-bold text-dark">{{ user.username }}</h1>
-                        <p class="text-gray-500">Lv.5 贴吧用户</p>
+                        <h1 class="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">{{ user.username }}</h1>
+                        <p class="text-gray-600 mt-1">
+                            <span class="inline-block px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-sm rounded-full font-medium">Lv.5 贴吧用户</span>
+                        </p>
                     </div>
-                    <button class="mt-4 md:mt-0 px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary/10 transition">
-                        编辑资料
+                    <button class="mt-4 md:mt-0 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <i class="fa fa-edit mr-2"></i>编辑资料
                     </button>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                    <div class="text-center">
-                        <div class="text-lg font-bold text-dark">152</div>
-                        <div class="text-sm text-gray-500">发帖</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
+                    <div class="text-center p-4 bg-white/50 rounded-xl border border-white/50 hover:bg-white/80 transition-all duration-300">
+                        <div class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">{{ total_posts }}</div>
+                        <div class="text-sm text-gray-600 mt-1">发帖</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-lg font-bold text-dark">328</div>
-                        <div class="text-sm text-gray-500">回复</div>
+                    <div class="text-center p-4 bg-white/50 rounded-xl border border-white/50 hover:bg-white/80 transition-all duration-300">
+                        <div class="text-2xl font-bold bg-gradient-to-r from-green-500 to-teal-500 bg-clip-text text-transparent">328</div>
+                        <div class="text-sm text-gray-600 mt-1">回复</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-lg font-bold text-dark">128</div>
-                        <div class="text-sm text-gray-500">关注</div>
+                    <div class="text-center p-4 bg-white/50 rounded-xl border border-white/50 hover:bg-white/80 transition-all duration-300">
+                        <div class="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">128</div>
+                        <div class="text-sm text-gray-600 mt-1">关注</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-lg font-bold text-dark">56</div>
-                        <div class="text-sm text-gray-500">粉丝</div>
+                    <div class="text-center p-4 bg-white/50 rounded-xl border border-white/50 hover:bg-white/80 transition-all duration-300">
+                        <div class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">56</div>
+                        <div class="text-sm text-gray-600 mt-1">粉丝</div>
                     </div>
                 </div>
             </div>
@@ -41,51 +46,47 @@
     </div>
     
     <!-- 我的帖子 -->
-    <div class="bg-white rounded-xl shadow-sm p-6">
-        <h2 class="text-xl font-bold text-dark mb-4">我的帖子</h2>
+    <div class="bg-gradient-to-br from-white to-gray-50/50 rounded-2xl shadow-lg p-8 border border-white/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
+        <h2 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-6">
+            <i class="fa fa-file-text mr-3"></i>我的帖子 ({{ total_posts }}篇)
+        </h2>
+        
+        {% if user_posts %}
         <div class="space-y-4">
-            <a href="{% url 'post_detail' pk=1 %}" class="block p-3 hover:bg-gray-50 rounded-md transition">
-                <h3 class="font-bold text-dark line-clamp-1">【教程】自制提拉米苏，零失败教程分享！</h3>
-                <p class="text-sm text-gray-600 line-clamp-2 mt-1">今天给大家分享一个简单易学的提拉米苏做法，不需要烤箱，材料也很容易买到...</p>
-                <div class="flex items-center text-xs text-gray-500 mt-2">
-                    <span>美食吧</span>
-                    <span class="mx-2">•</span>
-                    <span>2小时前</span>
-                    <span class="mx-2">•</span>
-                    <span>342赞</span>
+            {% for post in user_posts %}
+            <a href="{% url 'post_detail' pk=post.id %}" class="block p-4 bg-white/50 rounded-xl border border-white/50 hover:bg-white/80 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+                <h3 class="font-bold text-lg bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent line-clamp-1">{{ post.title }}</h3>
+                <p class="text-gray-600 line-clamp-2 mt-2">{{ post.content|truncatewords:30 }}</p>
+                <div class="flex items-center text-sm text-gray-500 mt-3">
+                    <span class="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">{{ post.tieba.name }}</span>
+                    <span class="mx-3">•</span>
+                    <span>{{ post.created_at|timesince }}前</span>
+                    <span class="mx-3">•</span>
+                    <span class="text-orange-500"><i class="fa fa-eye mr-1"></i>{{ post.views_count|default:0 }}浏览</span>
+                    <span class="mx-3">•</span>
+                    <span class="text-green-500"><i class="fa fa-comment mr-1"></i>{{ post.comment_count|default:0 }}回复</span>
                 </div>
             </a>
-            
-            <a href="{% url 'post_detail' pk=2 %}" class="block p-3 hover:bg-gray-50 rounded-md transition">
-                <h3 class="font-bold text-dark line-clamp-1">家常菜系列：红烧肉的正确做法</h3>
-                <p class="text-sm text-gray-600 line-clamp-2 mt-1">红烧肉是很多人的最爱，但要做得好吃并不容易。今天分享我的独家秘方...</p>
-                <div class="flex items-center text-xs text-gray-500 mt-2">
-                    <span>美食吧</span>
-                    <span class="mx-2">•</span>
-                    <span>5小时前</span>
-                    <span class="mx-2">•</span>
-                    <span>128赞</span>
-                </div>
-            </a>
-            
-            <a href="{% url 'post_detail' pk=3 %}" class="block p-3 hover:bg-gray-50 rounded-md transition">
-                <h3 class="font-bold text-dark line-clamp-1">探店分享：这家川菜馆的麻婆豆腐绝了！</h3>
-                <p class="text-sm text-gray-600 line-clamp-2 mt-1">今天去了一家新开的川菜馆，麻婆豆腐做得非常地道，麻辣鲜香...</p>
-                <div class="flex items-center text-xs text-gray-500 mt-2">
-                    <span>美食吧</span>
-                    <span class="mx-2">•</span>
-                    <span>昨天</span>
-                    <span class="mx-2">•</span>
-                    <span>567赞</span>
-                </div>
-            </a>
+            {% endfor %}
         </div>
         
-        <div class="text-center mt-6">
-            <button class="px-6 py-2 border border-gray-300 text-dark rounded-full hover:bg-gray-50 transition">
-                加载更多
+        {% if total_posts > 20 %}
+        <div class="text-center mt-8">
+            <button class="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                <i class="fa fa-refresh mr-2"></i>加载更多
             </button>
         </div>
+        {% endif %}
+        
+        {% else %}
+        <div class="text-center py-12">
+            <i class="fa fa-file-text-o text-6xl text-gray-300 mb-4"></i>
+            <p class="text-gray-500 text-lg">您还没有发布任何帖子</p>
+            <a href="{% url 'publish_center' %}" class="inline-block mt-4 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                <i class="fa fa-pencil mr-2"></i>去发布第一篇帖子
+            </a>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -3,85 +3,294 @@
 {% block title %}发布中心 - 百度贴吧{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto">
+<div class="max-w-6xl mx-auto">
     <div class="bg-white rounded-xl shadow-sm p-6">
+        <!-- 页面标题 -->
         <h1 class="text-2xl font-bold text-dark mb-6">发布中心</h1>
         
-        <!-- 快速发布 -->
-        <div class="mb-8">
-            <h2 class="text-lg font-semibold text-dark mb-4">快速发布</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <a href="#" class="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-primary hover:text-primary transition">
-                    <i class="fas fa-edit text-2xl mb-2"></i>
-                    <div class="font-medium">发帖</div>
-                </a>
-                <a href="#" class="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-primary hover:text-primary transition">
-                    <i class="fas fa-image text-2xl mb-2"></i>
-                    <div class="font-medium">发图</div>
-                </a>
-                <a href="#" class="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-primary hover:text-primary transition">
-                    <i class="fas fa-video text-2xl mb-2"></i>
-                    <div class="font-medium">发视频</div>
-                </a>
+        <!-- 消息显示区域 -->
+        {% if messages %}
+        <div class="mb-6">
+            {% for message in messages %}
+            <div class="p-4 rounded-lg {% if message.tags == 'error' %}bg-red-50 text-red-700 border border-red-200{% else %}bg-green-50 text-green-700 border border-green-200{% endif %}">
+                {{ message }}
             </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <!-- 发布类型选择 -->
+        <div class="flex border-b border-gray-200 mb-6">
+            <button class="px-6 py-3 font-medium text-primary border-b-2 border-primary" id="postTab">发布帖子</button>
+            <button class="px-6 py-3 font-medium text-gray-500 hover:text-dark transition" id="replyTab">发布回复</button>
         </div>
         
-        <!-- 发布历史 -->
-        <div>
-            <h2 class="text-lg font-semibold text-dark mb-4">发布历史</h2>
-            <div class="space-y-4">
-                <div class="p-4 border border-gray-200 rounded-lg">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-dark">【教程】自制提拉米苏，零失败教程分享！</h3>
-                        <span class="text-sm text-gray-500">2小时前</span>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">今天给大家分享一个简单易学的提拉米苏做法，不需要烤箱，材料也很容易买到...</p>
-                    <div class="flex items-center text-xs text-gray-500">
-                        <span>美食吧</span>
-                        <span class="mx-2">•</span>
-                        <span>342赞</span>
-                        <span class="mx-2">•</span>
-                        <span>56回复</span>
-                    </div>
-                </div>
-                
-                <div class="p-4 border border-gray-200 rounded-lg">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-dark">家常菜系列：红烧肉的正确做法</h3>
-                        <span class="text-sm text-gray-500">5小时前</span>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">红烧肉是很多人的最爱，但要做得好吃并不容易。今天分享我的独家秘方...</p>
-                    <div class="flex items-center text-xs text-gray-500">
-                        <span>美食吧</span>
-                        <span class="mx-2">•</span>
-                        <span>128赞</span>
-                        <span class="mx-2">•</span>
-                        <span>23回复</span>
-                    </div>
-                </div>
-                
-                <div class="p-4 border border-gray-200 rounded-lg">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-dark">探店分享：这家川菜馆的麻婆豆腐绝了！</h3>
-                        <span class="text-sm text-gray-500">昨天</span>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-3">今天去了一家新开的川菜馆，麻婆豆腐做得非常地道，麻辣鲜香...</p>
-                    <div class="flex items-center text-xs text-gray-500">
-                        <span>美食吧</span>
-                        <span class="mx-2">•</span>
-                        <span>567赞</span>
-                        <span class="mx-2">•</span>
-                        <span>89回复</span>
+        <!-- 发布帖子表单 -->
+        <form id="postForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- 选择贴吧 -->
+            <div class="mb-6">
+                <label class="block text-dark font-medium mb-2">选择发布到哪个贴吧</label>
+                <div class="relative">
+                    <select name="tieba" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition appearance-none" required>
+                        <option value="">请选择贴吧</option>
+                        {% for tieba in tiebas %}
+                        <option value="{{ tieba.id }}">{{ tieba.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
+                        <i class="fas fa-chevron-down"></i>
                     </div>
                 </div>
             </div>
             
-            <div class="text-center mt-6">
-                <button class="px-6 py-2 border border-gray-300 text-dark rounded-full hover:bg-gray-50 transition">
-                    加载更多
-                </button>
+            <!-- 帖子标题 -->
+            <div class="mb-6">
+                <label class="block text-dark font-medium mb-2">帖子标题</label>
+                <input type="text" name="title" placeholder="请输入帖子标题（最多50字）" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition" required maxlength="50">
+                <p class="text-xs text-gray-500 mt-1">标题将显示在帖子列表中，吸引更多用户点击</p>
+            </div>
+            
+            <!-- 帖子内容 -->
+            <div class="mb-6">
+                <label class="block text-dark font-medium mb-2">帖子内容</label>
+                <div class="border border-gray-300 rounded-lg overflow-hidden">
+                    <!-- 编辑器工具栏 -->
+                    <div class="flex flex-wrap items-center gap-1 px-3 py-2 bg-gray-50 border-b border-gray-300">
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="字体加粗">
+                            <i class="fas fa-bold"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="字体斜体">
+                            <i class="fas fa-italic"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="字体下划线">
+                            <i class="fas fa-underline"></i>
+                        </button>
+                        <span class="h-4 border-r border-gray-300 mx-1"></span>
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入图片">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入链接">
+                            <i class="fas fa-link"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入视频">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <span class="h-4 border-r border-gray-300 mx-1"></span>
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="表情">
+                            <i class="fas fa-smile"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="@用户">
+                            <i class="fas fa-at"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-500 hover:bg-gray-200 rounded transition" title="插入话题">
+                            <i class="fas fa-hashtag"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- 内容输入框 -->
+                    <textarea name="content" placeholder="请输入帖子内容，支持图片、视频等多媒体内容..." 
+                              class="w-full px-4 py-3 min-h-[200px] resize-none focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition" required></textarea>
+                </div>
+            </div>
+            
+            <!-- 图片上传 -->
+            <div class="mb-6">
+                <label class="block text-dark font-medium mb-2">添加图片（可选）</label>
+                <div class="flex flex-wrap gap-3">
+                    <!-- 上传按钮 -->
+                    <div class="w-24 h-24 border border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition relative group" id="uploadBtn">
+                        <input type="file" name="images" multiple accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <i class="fas fa-plus text-2xl text-gray-400 group-hover:text-primary transition"></i>
+                        <span class="text-xs text-gray-500 mt-1 group-hover:text-primary transition">添加图片</span>
+                    </div>
+                    
+                    <!-- 预览图占位 -->
+                    <div id="previewContainer" class="hidden">
+                        <!-- 上传的图片会显示在这里 -->
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">最多可上传9张图片，单张不超过10MB，支持jpg、png、gif格式</p>
+            </div>
+            
+            <!-- 帖子类型选择 -->
+            <div class="mb-6">
+                <label class="block text-dark font-medium mb-2">帖子类型</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+                        <input type="radio" name="post_type" value="normal" class="hidden" checked>
+                        <i class="fas fa-file-alt text-2xl text-gray-600 mb-2"></i>
+                        <span class="text-sm font-medium text-gray-700">普通帖子</span>
+                    </label>
+                    <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+                        <input type="radio" name="post_type" value="top" class="hidden">
+                        <i class="fas fa-thumbtack text-2xl text-gray-600 mb-2"></i>
+                        <span class="text-sm font-medium text-gray-700">置顶帖子</span>
+                    </label>
+                    <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+                        <input type="radio" name="post_type" value="essence" class="hidden">
+                        <i class="fas fa-star text-2xl text-gray-600 mb-2"></i>
+                        <span class="text-sm font-medium text-gray-700">精华帖子</span>
+                    </label>
+                    <label class="flex flex-col items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+                        <input type="radio" name="post_type" value="announcement" class="hidden">
+                        <i class="fas fa-bullhorn text-2xl text-gray-600 mb-2"></i>
+                        <span class="text-sm font-medium text-gray-700">公告帖子</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 发布设置 -->
+            <div class="mb-6">
+                <label class="block text-dark font-medium mb-2">发布设置</label>
+                <div class="space-y-3">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/30">
+                        <span class="ml-2 text-gray-700">发布后通知我的粉丝</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/30">
+                        <span class="ml-2 text-gray-700">允许其他用户评论</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/30">
+                        <span class="ml-2 text-gray-700">同步到我的动态</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="flex flex-wrap justify-end gap-4 pt-6 border-t border-gray-100">
+                <button type="button" class="px-6 py-2.5 border border-gray-300 text-dark rounded-lg hover:bg-gray-50 transition" id="saveDraftBtn">保存草稿</button>
+                <button type="submit" class="px-8 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition" id="publishBtn">发布帖子</button>
+            </div>
+        </form>
+        
+        <!-- 发布回复表单（默认隐藏） -->
+        <div id="replyForm" class="hidden">
+            <!-- 回复帖子 -->
+            <div class="mb-6">
+                <label class="block text-dark font-medium mb-2">回复到哪个帖子</label>
+                <div class="relative">
+                    <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition appearance-none">
+                        <option value="">请选择帖子</option>
+                        <option value="摄影技巧分享">分享一下最近拍的照片，大家觉得怎么样？</option>
+                        <option value="新手器材推荐">新手如何选择第一台相机？</option>
+                        <option value="旅游攻略">五一假期去哪里玩比较好？</option>
+                        <option value="美食推荐">这家餐厅的招牌菜真的绝了！</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 回复内容 -->
+            <div class="mb-6">
+                <label class="block text-dark font-medium mb-2">回复内容</label>
+                <textarea placeholder="请输入回复内容..." 
+                          class="w-full px-4 py-3 min-h-[120px] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition resize-none"></textarea>
+            </div>
+            
+            <!-- 操作按钮 -->
+            <div class="flex flex-wrap justify-end gap-4 pt-6 border-t border-gray-100">
+                <button class="px-6 py-2.5 border border-gray-300 text-dark rounded-lg hover:bg-gray-50 transition">取消</button>
+                <button class="px-8 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition">发布回复</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- JavaScript -->
+<script>
+// 发布类型切换
+document.addEventListener('DOMContentLoaded', function() {
+    const postTab = document.getElementById('postTab');
+    const replyTab = document.getElementById('replyTab');
+    const postForm = document.getElementById('postForm');
+    const replyForm = document.getElementById('replyForm');
+    
+    postTab.addEventListener('click', function() {
+        postTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+        postTab.classList.remove('text-gray-500');
+        replyTab.classList.add('text-gray-500');
+        replyTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+        postForm.classList.remove('hidden');
+        replyForm.classList.add('hidden');
+    });
+    
+    replyTab.addEventListener('click', function() {
+        replyTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+        replyTab.classList.remove('text-gray-500');
+        postTab.classList.add('text-gray-500');
+        postTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+        replyForm.classList.remove('hidden');
+        postForm.classList.add('hidden');
+    });
+    
+    // 图片上传功能
+    const uploadBtn = document.getElementById('uploadBtn');
+    const previewContainer = document.getElementById('previewContainer');
+    
+    uploadBtn.addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (files.length > 0) {
+            previewContainer.classList.remove('hidden');
+            previewContainer.innerHTML = '';
+            
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.className = 'relative w-24 h-24 border border-gray-200 rounded-lg overflow-hidden';
+                        imgContainer.innerHTML = `
+                            <img src="${e.target.result}" alt="预览图" class="w-full h-full object-cover">
+                            <button class="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center">×</button>
+                        `;
+                        previewContainer.appendChild(imgContainer);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+    
+    // 草稿保存功能
+    const saveDraftBtn = document.getElementById('saveDraftBtn');
+    const publishBtn = document.getElementById('publishBtn');
+    
+    saveDraftBtn.addEventListener('click', function() {
+        // 保存草稿逻辑
+        showToast('草稿已保存', 'success');
+    });
+    
+    publishBtn.addEventListener('click', function() {
+        // 发布帖子逻辑
+        showToast('帖子发布成功', 'success');
+    });
+    
+    // Toast提示函数
+    function showToast(message, type) {
+        const toast = document.createElement('div');
+        toast.className = `fixed top-4 right-4 px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full ${
+            type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.remove('translate-x-full');
+        }, 100);
+        
+        setTimeout(() => {
+            toast.classList.add('translate-x-full');
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+});
+</script>
 {% endblock %}

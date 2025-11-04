@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}搜索 - {{ query }} - 百度贴吧{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- 搜索头部 -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-dark mb-4">搜索结果</h1>
+        
+        <!-- 搜索框 -->
+        <div class="relative max-w-2xl mb-6">
+            <form action="{% url 'global_search' %}" method="get" class="flex items-center">
+                <input type="text" 
+                       name="q" 
+                       value="{{ query }}" 
+                       placeholder="搜索贴吧、帖子、用户..." 
+                       class="w-full py-3 px-6 pr-12 rounded-full border-2 border-gray-200 bg-white focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary shadow-lg transition-all duration-300 placeholder-gray-500">
+                <button type="submit" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-primary text-white p-2 rounded-full hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg">
+                    <i class="fa fa-search text-sm"></i>
+                </button>
+            </form>
+        </div>
+        
+        <!-- 搜索类型筛选 -->
+        <div class="flex space-x-4 mb-6">
+            <a href="{% url 'global_search' %}?q={{ query }}&type=all" 
+               class="px-4 py-2 rounded-full transition-all duration-300 {% if search_type == 'all' %}bg-primary text-white shadow-lg{% else %}bg-gray-100 text-dark hover:bg-gray-200{% endif %}">
+                全部
+            </a>
+            <a href="{% url 'global_search' %}?q={{ query }}&type=tieba" 
+               class="px-4 py-2 rounded-full transition-all duration-300 {% if search_type == 'tieba' %}bg-primary text-white shadow-lg{% else %}bg-gray-100 text-dark hover:bg-gray-200{% endif %}">
+                贴吧 ({{ tieba_count }})
+            </a>
+            <a href="{% url 'global_search' %}?q={{ query }}&type=post" 
+               class="px-4 py-2 rounded-full transition-all duration-300 {% if search_type == 'post' %}bg-primary text-white shadow-lg{% else %}bg-gray-100 text-dark hover:bg-gray-200{% endif %}">
+                帖子 ({{ post_count }})
+            </a>
+            <a href="{% url 'global_search' %}?q={{ query }}&type=user" 
+               class="px-4 py-2 rounded-full transition-all duration-300 {% if search_type == 'user' %}bg-primary text-white shadow-lg{% else %}bg-gray-100 text-dark hover:bg-gray-200{% endif %}">
+                用户 ({{ user_count }})
+            </a>
+        </div>
+    </div>
+    
+    <!-- 搜索结果内容 -->
+    <div class="space-y-8">
+        {% if search_type == 'all' or search_type == 'tieba' and tieba_results %}
+        <!-- 贴吧搜索结果 -->
+        <div>
+            <h2 class="text-2xl font-semibold text-dark mb-4">贴吧</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for tieba in tieba_results %}
+                <a href="{% url 'tieba_detail' tieba.id %}" class="block bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover">
+                    <div class="p-6">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+                                <i class="fa fa-comments text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-dark">{{ tieba.name }}</h3>
+                                <p class="text-gray-600 text-sm">{{ tieba.members_count }} 成员</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-sm line-clamp-2">{{ tieba.description|default:"暂无描述" }}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if search_type == 'all' or search_type == 'post' and post_results %}
+        <!-- 帖子搜索结果 -->
+        <div>
+            <h2 class="text-2xl font-semibold text-dark mb-4">帖子</h2>
+            <div class="space-y-4">
+                {% for post in post_results %}
+                <a href="{% url 'post_detail' post.id %}" class="block bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-bold text-lg text-dark line-clamp-1">{{ post.title }}</h3>
+                            <span class="text-sm text-gray-500 whitespace-nowrap">{{ post.created_at|date:"Y-m-d H:i" }}</span>
+                        </div>
+                        <p class="text-gray-700 mb-3 line-clamp-2">{{ post.content }}</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span class="bg-primary/10 text-primary px-2 py-1 rounded-full">{{ post.tieba.name }}</span>
+                            <div class="flex items-center space-x-4">
+                                <span><i class="fa fa-eye mr-1"></i>{{ post.views|default:0 }}</span>
+                                <span><i class="fa fa-comment mr-1"></i>{{ post.comment_count|default:0 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if search_type == 'all' or search_type == 'user' and user_results %}
+        <!-- 用户搜索结果 -->
+        <div>
+            <h2 class="text-2xl font-semibold text-dark mb-4">用户</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for user in user_results %}
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 card-hover">
+                    <div class="p-6 text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-user text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-dark mb-1">{{ user.nickname|default:user.username }}</h3>
+                        <p class="text-gray-600 text-sm mb-4">@{{ user.username }}</p>
+                        <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary/90 transition-all duration-300">
+                            关注
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- 无结果提示 -->
+        {% if not tieba_results and not post_results and not user_results %}
+        <div class="text-center py-16">
+            <i class="fa fa-search text-6xl text-gray-300 mb-4"></i>
+            <h3 class="text-2xl font-semibold text-gray-500 mb-2">没有找到相关结果</h3>
+            <p class="text-gray-500">请尝试使用其他关键词或调整搜索类型</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+</style>
+{% endblock %}
