@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人信息页面思维导图</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        .mindmap-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .mindmap-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px auto;
+            max-width: 1200px;
+            overflow: hidden;
+        }
+        .mindmap-header {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .mindmap-content {
+            padding: 30px;
+            min-height: 600px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #0066cc;
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="mindmap-container">
+    <div class="mindmap-card">
+        <div class="mindmap-header">
+            <h1 class="text-3xl font-bold mb-2">个人信息页面思维导图</h1>
+            <p class="text-lg opacity-90">用户个人资料管理功能结构分析</p>
+        </div>
+        
+        <div class="mindmap-content">
+            <!-- Mermaid 思维导图 -->
+            <div class="mermaid">
+mindmap
+  root((个人信息页面))
+    用户信息管理
+      基本信息
+        头像上传
+        昵称设置
+        个性签名
+        性别选择
+        生日设置
+      账号安全
+        密码修改
+        手机绑定
+        邮箱验证
+        登录记录
+    社交功能
+      关注管理
+        关注列表
+        粉丝列表
+        互相关注
+      互动统计
+        发帖数量
+        获赞数量
+        评论数量
+        访问量统计
+    内容管理
+      我的帖子
+        已发布
+        草稿箱
+        收藏夹
+      我的回复
+        评论记录
+        点赞记录
+        分享记录
+    设置选项
+      隐私设置
+        谁可以看我的资料
+        私信权限
+        关注权限
+      通知设置
+        消息提醒
+        系统通知
+        邮件通知
+            </div>
+            
+            <!-- 功能详细说明 -->
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold text-primary mb-3">📊 用户信息管理</h3>
+                    <ul class="space-y-2">
+                        <li>• 头像上传与裁剪功能</li>
+                        <li>• 昵称唯一性验证</li>
+                        <li>• 个性签名字数限制</li>
+                        <li>• 生日日期选择器</li>
+                        <li>• 账号安全等级显示</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold text-primary mb-3">👥 社交功能</h3>
+                    <ul class="space-y-2">
+                        <li>• 关注/取消关注操作</li>
+                        <li>• 粉丝列表分页显示</li>
+                        <li>• 互动数据可视化图表</li>
+                        <li>• 用户活跃度分析</li>
+                        <li>• 社交关系网络图</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold text-primary mb-3">📝 内容管理</h3>
+                    <ul class="space-y-2">
+                        <li>• 帖子分类筛选功能</li>
+                        <li>• 草稿自动保存机制</li>
+                        <li>• 收藏夹分类管理</li>
+                        <li>• 内容搜索与过滤</li>
+                        <li>• 批量操作支持</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold text-primary mb-3">⚙️ 设置选项</h3>
+                    <ul class="space-y-2">
+                        <li>• 隐私级别自定义</li>
+                        <li>• 通知渠道管理</li>
+                        <li>• 数据导出功能</li>
+                        <li>• 主题皮肤切换</li>
+                        <li>• 语言设置支持</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            mindmap: {
+                useMaxWidth: true
+            }
+        });
+    </script>
+</body>
+</html>

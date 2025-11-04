@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贴吧详情思维导图</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        .mindmap-container {
+            background: linear-gradient(135deg, #a3bded 0%, #6991c7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .mindmap-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px auto;
+            max-width: 1200px;
+            overflow: hidden;
+        }
+        .mindmap-header {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .mindmap-content {
+            padding: 30px;
+            min-height: 600px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #74b9ff;
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="mindmap-container">
+    <div class="mindmap-card">
+        <div class="mindmap-header">
+            <h1 class="text-3xl font-bold mb-2">贴吧详情思维导图</h1>
+            <p class="text-lg opacity-90">贴吧信息展示与社区管理功能结构分析</p>
+        </div>
+        
+        <div class="mindmap-content">
+            <!-- Mermaid 思维导图 -->
+            <div class="mermaid">
+mindmap
+  root((贴吧详情))
+    贴吧信息展示
+      基本信息
+        贴吧名称
+        贴吧头像
+        创建时间
+        成员数量
+      贴吧简介
+        简介内容
+        吧规展示
+        标签分类
+        等级制度
+      管理团队
+        吧主信息
+        小吧主列表
+        吧务团队
+        申请吧主
+    内容展示
+      帖子列表
+        最新帖子
+        热门帖子
+        精品帖子
+        置顶帖子
+      帖子分类
+        按时间排序
+        按热度排序
+        按回复排序
+        按类型筛选
+      内容预览
+        帖子标题
+        作者信息
+        回复数量
+        最后回复
+    社区互动
+      关注功能
+        关注/取消
+        关注列表
+        粉丝列表
+      发帖功能
+        快速发帖
+        帖子类型
+        内容编辑
+        发布设置
+      互动统计
+        今日发帖
+        总帖子数
+        活跃用户
+        访问统计
+    贴吧管理
+      内容管理
+        帖子审核
+        内容删除
+        帖子置顶
+        帖子加精
+      成员管理
+        禁言管理
+        踢出成员
+        权限设置
+        黑名单
+      设置管理
+        吧规编辑
+        分类设置
+        权限配置
+        外观设置
+    特色功能
+      签到系统
+        每日签到
+        连续签到
+        签到奖励
+        签到排行
+      等级系统
+        经验值计算
+        等级提升
+        特权功能
+        等级图标
+      活动功能
+        贴吧活动
+        投票功能
+        抽奖活动
+        节日活动
+            </div>
+            
+            <!-- 功能详细说明 -->
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-3">🏠 贴吧信息展示</h3>
+                    <ul class="space-y-2">
+                        <li>• 完整贴吧信息呈现</li>
+                        <li>• 管理团队信息展示</li>
+                        <li>• 社区规则清晰展示</li>
+                        <li>• 数据统计可视化</li>
+                        <li>• 贴吧特色功能突出</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-3">📝 内容展示</h3>
+                    <ul class="space-y-2">
+                        <li>• 多种排序方式支持</li>
+                        <li>• 智能内容推荐</li>
+                        <li>• 帖子预览优化</li>
+                        <li>• 分类筛选功能</li>
+                        <li>• 搜索功能集成</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-3">🤝 社区互动</h3>
+                    <ul class="space-y-2">
+                        <li>• 实时互动数据更新</li>
+                        <li>• 发帖流程优化</li>
+                        <li>• 关注系统完善</li>
+                        <li>• 统计数据分析</li>
+                        <li>• 用户活跃度监控</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-3">⚙️ 贴吧管理</h3>
+                    <ul class="space-y-2">
+                        <li>• 内容审核机制</li>
+                        <li>• 成员权限管理</li>
+                        <li>• 社区规则维护</li>
+                        <li>• 管理工具集成</li>
+                        <li>• 数据备份恢复</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            mindmap: {
+                useMaxWidth: true
+            }
+        });
+    </script>
+</body>
+</html>
